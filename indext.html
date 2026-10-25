@@ -584,6 +584,18 @@ auth && auth.onAuthStateChanged(async function(user) {
     showMessage("Account verify nahi hua. Internet aur Firestore Rules check karein.");
   }
 });
+document.querySelectorAll("#nav button").forEach(b =>
+  b.addEventListener("click", () => openPage(b.dataset.page))
+);
+
+document.querySelectorAll("[data-open]").forEach(b =>
+  b.addEventListener("click", () => openPage(b.dataset.open))
+);
+
+document.getElementById("menuButton").addEventListener("click", () =>
+  document.getElementById("sidebar").classList.toggle("open")
+);
+
 </script>
 
 </body>
