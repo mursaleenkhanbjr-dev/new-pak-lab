@@ -217,6 +217,59 @@ function openPage(page) {
     return;
   }
 
+  if (page === "Saved Records") {
+    let records = [];
+
+    try {
+      records = JSON.parse(
+        localStorage.getItem("newPakLabReports") || "[]"
+      );
+    } catch (e) {
+      records = [];
+    }
+
+    module.innerHTML = `
+      <section class="panel">
+        <h3>Saved Invoice Records</h3>
+        <div class="panel-sub">
+          New Pak Lab Management System
+        </div>
+        <div id="savedRecordsList"></div>
+      </section>
+    `;
+
+    const list = document.getElementById("savedRecordsList");
+
+    if (!records.length) {
+      list.textContent = "Abhi koi saved invoice nahi hai.";
+    } else {
+      list.innerHTML = records.map((r, i) => `
+        <div style="padding:14px;margin-top:10px;border:1px solid #ddd;border-radius:8px">
+          <b>${escapeHtml(r.patientName || "Unnamed Patient")}</b>
+          <p>Invoice No: ${escapeHtml(r.invoiceNo || "N/A")}</p>
+          <p>Date: ${escapeHtml(r.invoiceDate || "N/A")}</p>
+          <button data-record-index="${i}">View Invoice</button>
+        </div>
+      `).join("");
+
+      list.querySelectorAll("[data-record-index]").forEach(button => {
+        button.addEventListener("click", function () {
+          const index = Number(this.dataset.recordIndex);
+          localStorage.setItem(
+            "newPakLabSelectedInvoice",
+            String(index)
+          );
+          window.open(
+            "https://mursaleenkhanbjr-dev.github.io/new-pak-lab/invoice.html",
+            "_blank"
+          );
+        });
+      });
+    }
+
+    return;
+  }
+
   module.innerHTML = `
     <section class="panel">
       <h3>${page}</h3>
