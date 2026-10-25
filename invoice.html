@@ -976,6 +976,7 @@
         }
 function loadSelectedInvoice() {
     const selected = localStorage.getItem("newPakLabSelectedInvoice");
+    alert("Selected invoice index: " + selected);
     if (selected === null) return;
 
     const index = Number(selected);
