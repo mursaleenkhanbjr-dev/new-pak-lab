@@ -673,7 +673,23 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "APNI_FIREBASE_API_KEY",
+  authDomain: "new-pak-medical-laborato-872b4.firebaseapp.com",
+  projectId: "new-pak-medical-laborato-872b4",
+  storageBucket: "new-pak-medical-laborato-872b4.firebasestorage.app",
+  messagingSenderId: "199483069764",
+  appId: "1:199483069764:web:a755612887b93e951ef311"
+};
 
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+</script>
 </head>
 
 <body>
