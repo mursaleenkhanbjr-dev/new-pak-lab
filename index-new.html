@@ -185,41 +185,57 @@ document.getElementById("logoutButton").addEventListener("click",async()=>{
 });
 
 
+
 function openPage(page){
- document.getElementById("pageTitle").textContent=page;
- document.querySelectorAll("#nav button").forEach(b=>
-   b.classList.toggle("active",b.dataset.page===page)
- );
+  const dashboard = document.getElementById("dashboardPage");
+  const module = document.getElementById("modulePage");
 
- const dashboard=document.getElementById("dashboardPage");
- const module=document.getElementById("modulePage");
+  document.getElementById("pageTitle").textContent = page;
 
- dashboard.classList.toggle("hidden",page!=="Dashboard");
+  document.querySelectorAll("#nav button").forEach(b => {
+    b.classList.toggle("active", b.dataset.page === page);
+  });
 
- if(page==="Create Invoice"){
-   module.classList.remove("hidden");
-   document.getElementById("moduleHeading").textContent="Create Invoice";
-   document.getElementById("moduleSub").textContent="New Pak Lab Management System";
-   module.innerHTML=`
-    <section class="panel" style="padding:0;overflow:hidden">
-     <iframe src="./invoice.html" title="New Pak Lab Invoice"
-      style="display:block;width:100%;height:85vh;min-height:650px;border:0;background:white">
-     </iframe>
-    </section>`;
- }else{
-   module.classList.toggle("hidden",page==="Dashboard");
-   if(page!=="Dashboard"){
-     document.getElementById("moduleHeading").textContent=page;
-     document.getElementById("moduleSub").textContent=page+" · New Pak Lab Management System";
-   }
- }
+  dashboard.classList.toggle("hidden", page !== "Dashboard");
+  module.classList.toggle("hidden", page === "Dashboard");
 
- document.getElementById("sidebar").classList.remove("open");
+  // Har module ke liye pehle normal placeholder wapas lagayein
+  module.innerHTML = `
+    <section class="panel">
+      <h3 id="moduleHeading">Workspace</h3>
+      <div class="panel-sub" id="moduleSub">New Pak Lab Management System</div>
+      <div class="module-message">
+        <b>Workspace design is ready.</b><br>
+        This section is currently a placeholder. It does not yet
+        create, read, edit, delete, or store records.
+        We will connect each module securely using Firebase.
+      </div>
+    </section>
+  `;
+
+  if(page === "Create Invoice"){
+    document.getElementById("moduleHeading").textContent = page;
+    document.getElementById("moduleSub").textContent =
+      "New Pak Lab Management System";
+
+    module.innerHTML = `
+      <section class="panel" style="padding:0;overflow:hidden">
+        <iframe
+          src="./invoice.html"
+          title="New Pak Lab Invoice"
+          style="display:block;width:100%;height:85vh;min-height:650px;border:0;background:white">
+        </iframe>
+      </section>
+    `;
+  } else if(page !== "Dashboard"){
+    document.getElementById("moduleHeading").textContent = page;
+    document.getElementById("moduleSub").textContent =
+      page + " · New Pak Lab Management System";
+  }
+
+  document.getElementById("sidebar").classList.remove("open");
 }
 
-document.querySelectorAll("#nav button").forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.page)));
-document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.open)));
-document.getElementById("menuButton").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
 </script>
 </body>
 </html>
