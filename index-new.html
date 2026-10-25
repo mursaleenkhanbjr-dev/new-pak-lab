@@ -236,6 +236,18 @@ function openPage(page){
   document.getElementById("sidebar").classList.remove("open");
 }
 
+document.querySelectorAll("#nav button").forEach(b =>
+  b.addEventListener("click", () => openPage(b.dataset.page))
+);
+
+document.querySelectorAll("[data-open]").forEach(b =>
+  b.addEventListener("click", () => openPage(b.dataset.open))
+);
+
+document.getElementById("menuButton").addEventListener("click", () =>
+  document.getElementById("sidebar").classList.toggle("open")
+);
+
 </script>
 </body>
 </html>
