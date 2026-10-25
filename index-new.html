@@ -229,6 +229,17 @@ function openPage(page) {
     </section>
   `;
 }
+  function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, function (c) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[c];
+  });
+}
 </script>
 </body>
 </html>
