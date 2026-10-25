@@ -183,15 +183,40 @@ document.getElementById("logoutButton").addEventListener("click",async()=>{
  try{await auth.signOut()}catch(e){alert("Logout error: "+e.message)}
  sessionStorage.removeItem("newPakSelectedBranch");showLogin();
 });
+
+
 function openPage(page){
  document.getElementById("pageTitle").textContent=page;
- document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
- document.getElementById("dashboardPage").classList.toggle("hidden",page!=="Dashboard");
- document.getElementById("modulePage").classList.toggle("hidden",page==="Dashboard");
- document.getElementById("moduleHeading").textContent=page;
- document.getElementById("moduleSub").textContent=page+" · New Pak Lab Management System";
+ document.querySelectorAll("#nav button").forEach(b=>
+   b.classList.toggle("active",b.dataset.page===page)
+ );
+
+ const dashboard=document.getElementById("dashboardPage");
+ const module=document.getElementById("modulePage");
+
+ dashboard.classList.toggle("hidden",page!=="Dashboard");
+
+ if(page==="Create Invoice"){
+   module.classList.remove("hidden");
+   document.getElementById("moduleHeading").textContent="Create Invoice";
+   document.getElementById("moduleSub").textContent="New Pak Lab Management System";
+   module.innerHTML=`
+    <section class="panel" style="padding:0;overflow:hidden">
+     <iframe src="./invoice.html" title="New Pak Lab Invoice"
+      style="display:block;width:100%;height:85vh;min-height:650px;border:0;background:white">
+     </iframe>
+    </section>`;
+ }else{
+   module.classList.toggle("hidden",page==="Dashboard");
+   if(page!=="Dashboard"){
+     document.getElementById("moduleHeading").textContent=page;
+     document.getElementById("moduleSub").textContent=page+" · New Pak Lab Management System";
+   }
+ }
+
  document.getElementById("sidebar").classList.remove("open");
 }
+
 document.querySelectorAll("#nav button").forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.page)));
 document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.open)));
 document.getElementById("menuButton").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
