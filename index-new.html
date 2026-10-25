@@ -240,6 +240,22 @@ function openPage(page) {
     }[c];
   });
 }
+document.querySelectorAll("#nav button").forEach(function (button) {
+  button.addEventListener("click", function () {
+    openPage(button.dataset.page);
+  });
+});
+
+document.querySelectorAll("[data-open]").forEach(function (button) {
+  button.addEventListener("click", function () {
+    openPage(button.dataset.open);
+  });
+});
+
+document.getElementById("menuButton").addEventListener("click", function () {
+  document.getElementById("sidebar").classList.toggle("open");
+});
+
 </script>
 </body>
 </html>
