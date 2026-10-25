@@ -974,6 +974,25 @@
             });
             if (!r.tests?.length) document.getElementById("testList").innerHTML = '<div class="empty">Choose a test above and press Add Test.</div>';
         }
+function loadSelectedInvoice() {
+    const selected = localStorage.getItem("newPakLabSelectedInvoice");
+    if (selected === null) return;
+
+    const index = Number(selected);
+    localStorage.removeItem("newPakLabSelectedInvoice");
+
+    let records = [];
+    try {
+        records = JSON.parse(localStorage.getItem("newPakLabReports") || "[]");
+    } catch (e) {}
+
+    if (Number.isInteger(index) && records[index]) {
+        loadReport(records[index]);
+    }
+}
+
+window.addEventListener("DOMContentLoaded", loadSelectedInvoice);
+
         function newReport() {
             if (!confirm("New report banayein? Pehle report save kar lein.")) return;
             ["patientName", "patientAge", "mobile", "referred"].forEach(id => document.getElementById(id).value = "");
