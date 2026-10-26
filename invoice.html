@@ -1084,14 +1084,220 @@ async function saveReport() {
     }
 }
 
-        function showSaved() {
-            let records; try {records = JSON.parse(localStorage.getItem("newPakLabReports") || "[]")} catch (e) {records = []}
-            if (!records.length) {alert("Abhi koi saved report nahi."); return }
-            let msg = records.map((r, i) => (i + 1) + ". " + (r.patientName || "Unnamed") + " | " + r.invoiceNo + " | " + r.invoiceDate).join("\n");
-            let choice = prompt("Saved reports:\n" + msg + "\n\nLoad karne ke liye report ka number likhein:");
-            let i = Number(choice) - 1; if (!Number.isInteger(i) || !records[i]) return;
-            loadReport(records[i]);
+        
+async function showSaved() {
+    try {
+        const user = auth.currentUser;
+
+        if (!user) {
+            alert("Pehle Dashboard mein login karein.");
+            return;
         }
+
+        const userDoc = await db.collection("users").doc(user.uid).get();
+
+        if (!userDoc.exists) {
+            alert("User profile nahi mila.");
+            return;
+        }
+
+        const profile = userDoc.data();
+
+        if (profile.active !== true) {
+            alert("Aapka account active nahi hai.");
+            return;
+        }
+
+        let query = db.collection("invoices");
+
+        if (profile.role !== "superadmin") {
+            if (profile.role !== "branch" || !profile.branchId) {
+                alert("Aapka branch access verify nahi hua.");
+                return;
+            }
+
+            query = query.where("branchId", "==", profile.branchId);
+        }
+
+        const snapshot = await query.get();
+        const records = snapshot.docs.map(doc => ({
+            ...doc.data(),
+            _docId: doc.id
+        }));
+
+        if (!records.length) {
+            alert("Abhi koi saved report nahi mili.");
+            return;
+        }
+
+        records.sort((a, b) =>
+            String(b.invoiceDate || "").localeCompare(
+                String(a.invoiceDate || "")
+            )
+        );
+
+        const old = document.getElementById("savedReportsPanel");
+        if (old) old.remove();
+
+        const panel = document.createElement("div");
+        panel.id = "savedReportsPanel";
+
+        panel.style.cssText = `
+            position:fixed; inset:0; z-index:99999;
+            background:#f3f6fa; padding:20px;
+            overflow:auto; font-family:Arial,sans-serif;
+        `;
+
+        panel.innerHTML = `
+            <div style="max-width:1100px;margin:auto;background:white;
+                padding:20px;border-radius:12px;
+                box-shadow:0 3px 15px #0002">
+
+                <div style="display:flex;justify-content:space-between;
+                    align-items:center;gap:10px;flex-wrap:wrap">
+                    <h2 style="color:#0b3c5d;margin:0">
+                        Saved Reports
+                    </h2>
+                    <button id="closeSavedReports"
+                        style="padding:10px 16px;cursor:pointer">
+                        Close ✕
+                    </button>
+                </div>
+
+                <input id="savedSearch"
+                    placeholder="Search invoice, patient, date..."
+                    style="width:100%;box-sizing:border-box;
+                    padding:12px;margin:18px 0;border:1px solid #ccc;
+                    border-radius:6px">
+
+                <div style="overflow-x:auto">
+                    <table style="width:100%;border-collapse:collapse;
+                        min-width:750px">
+                        <thead style="background:#0b3c5d;color:white">
+                            <tr>
+                                <th style="padding:12px">Invoice No.</th>
+                                <th style="padding:12px">Patient</th>
+                                <th style="padding:12px">Date</th>
+                                <th style="padding:12px">Branch</th>
+                                <th style="padding:12px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="savedReportsBody"></tbody>
+                    </table>
+                </div>
+
+                <p id="savedCount" style="color:#555"></p>
+            </div>
+        `;
+
+        document.body.appendChild(panel);
+
+        const body = panel.querySelector("#savedReportsBody");
+        const search = panel.querySelector("#savedSearch");
+        const count = panel.querySelector("#savedCount");
+
+        function renderRows() {
+            const term = search.value.toLowerCase().trim();
+
+            const filtered = records.filter(r =>
+                [
+                    r.invoiceNo, r.patientName, r.invoiceDate,
+                    r.branch, r.branchId
+                ].some(v => String(v || "").toLowerCase().includes(term))
+            );
+
+            body.innerHTML = "";
+
+            filtered.forEach(r => {
+                const tr = document.createElement("tr");
+                tr.style.borderBottom = "1px solid #ddd";
+
+                const values = [
+                    r.invoiceNo || "",
+                    r.patientName || "",
+                    r.invoiceDate || "",
+                    r.branch || r.branchId || ""
+                ];
+
+                values.forEach(value => {
+                    const td = document.createElement("td");
+                    td.style.cssText = "padding:12px;color:#222";
+                    td.textContent = value;
+                    tr.appendChild(td);
+                });
+
+                const actions = document.createElement("td");
+                actions.style.cssText =
+                    "padding:10px;white-space:nowrap";
+
+                const openBtn = document.createElement("button");
+                openBtn.textContent = "Open";
+                openBtn.style.cssText =
+                    "padding:7px;margin:3px;cursor:pointer";
+
+                openBtn.onclick = () => {
+                    loadReport({
+                        ...r,
+                        tests: (r.tests || []).map(t => ({
+                            ...t,
+                            rows: (t.rows || []).map(a =>
+                                Array.isArray(a) ? a : [
+                                    a.parameter || "",
+                                    a.result || "",
+                                    a.unit || "",
+                                    a.reference || ""
+                                ]
+                            )
+                        }))
+                    });
+                    panel.remove();
+                };
+
+                const printBtn = document.createElement("button");
+                printBtn.textContent = "Print";
+                printBtn.style.cssText =
+                    "padding:7px;margin:3px;cursor:pointer";
+
+                printBtn.onclick = () => {
+                    loadReport({
+                        ...r,
+                        tests: (r.tests || []).map(t => ({
+                            ...t,
+                            rows: (t.rows || []).map(a =>
+                                Array.isArray(a) ? a : [
+                                    a.parameter || "",
+                                    a.result || "",
+                                    a.unit || "",
+                                    a.reference || ""
+                                ]
+                            )
+                        }))
+                    });
+                    panel.remove();
+                    setTimeout(() => window.print(), 300);
+                };
+
+                actions.append(openBtn, printBtn);
+                tr.appendChild(actions);
+                body.appendChild(tr);
+            });
+
+            count.textContent =
+                "Total reports: " + filtered.length;
+        }
+
+        search.addEventListener("input", renderRows);
+        panel.querySelector("#closeSavedReports").onclick =
+            () => panel.remove();
+
+        renderRows();
+
+    } catch (error) {
+        console.error("Saved Reports error:", error);
+        alert("Reports load nahi huin: " + error.message);
+    }
+}
+
         function loadReport(r) {
             Object.keys(r).forEach(k => {let e = document.getElementById(k); if (e && typeof r[k] === "string") e.value = r[k]});
             document.getElementById("testList").innerHTML = "";
