@@ -969,12 +969,13 @@ const db = firebase.firestore();
             return report;
         }
        
+
 async function saveReport() {
     try {
         const user = auth.currentUser;
 
         if (!user) {
-            alert("Dashboard mein pehle login karein, phir invoice save karein.");
+            alert("Pehle Dashboard mein login karein.");
             return;
         }
 
@@ -1021,35 +1022,38 @@ async function saveReport() {
             throw new Error("Aap sirf apni assigned branch mein save kar sakte hain.");
         }
 
-        report.branchId = branchId;
-
         const invoiceNo = String(report.invoiceNo || "").trim();
 
         if (!invoiceNo) {
             throw new Error("Invoice number khali hai.");
         }
 
+        report.branchId = branchId;
+
         const docId = branchId + "_" +
             invoiceNo.replace(/[^a-zA-Z0-9_-]/g, "_");
 
-        await db.collection("invoices").doc(docId)
-const firebaseReport = JSON.parse(JSON.stringify(report));
+        // Firebase ke liye nested arrays ko objects mein badlein.
+        const firebaseReport = {
+            ...report,
+            tests: (report.tests || []).map(test => ({
+                title: test.title || "",
+                rows: (test.rows || []).map(row => ({
+                    parameter: row[0] || "",
+                    result: row[1] || "",
+                    unit: row[2] || "",
+                    reference: row[3] || ""
+                }))
+            })),
+            branchId: branchId,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
 
-firebaseReport.tests = (report.tests || []).map(test => ({
-    title: test.title || "",
-    rows: (test.rows || []).map(row => ({
-        values: [...row]
-    }))
-}));
+        await db.collection("invoices").doc(docId).set(firebaseReport);
 
-await db.collection("invoices").doc(docId).set({
-    ...firebaseReport,
-    branchId: branchId,
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-});
-;
-
+        // Browser mein purana format barqarar rakhein.
         let records = [];
+
         try {
             records = JSON.parse(
                 localStorage.getItem("newPakLabReports") || "[]"
@@ -1061,15 +1065,18 @@ await db.collection("invoices").doc(docId).set({
                  r.branchId === branchId
         );
 
-        if (index >= 0) records[index] = report;
-        else records.push(report);
+        if (index >= 0) {
+            records[index] = report;
+        } else {
+            records.push(report);
+        }
 
         localStorage.setItem(
             "newPakLabReports",
             JSON.stringify(records)
         );
 
-        alert("Invoice browser aur Firebase dono mein save ho gayi.");
+        alert("Invoice Firebase aur browser dono mein save ho gayi.");
 
     } catch (error) {
         console.error("Invoice save error:", error);
