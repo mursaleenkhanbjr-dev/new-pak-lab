@@ -246,7 +246,8 @@ function openPage(page) {
         <iframe
           src="https://mursaleenkhanbjr-dev.github.io/new-pak-lab/invoice.html"
           title="New Pak Lab Invoice"
-          style="display:block;width:100%;height:85vh;min-height:650px;border:0;background:white"
+          style="display
+          :block;width:100%;height:85vh;min-height:650px;border:0;background:white"
           allow="clipboard-read; clipboard-write">
         </iframe>
       </section>
@@ -304,6 +305,140 @@ function openPage(page) {
       });
     }
 
+    return;
+  }
+
+  if (page === "Patients") {
+    const branchId = sessionStorage.getItem("newPakSelectedBranch");
+
+    module.innerHTML = `
+      <section class="panel">
+        <h3>Patient Registration</h3>
+        <div class="panel-sub">New Pak Lab Management System</div>
+
+        <form id="patientForm">
+          <label>Patient Name</label>
+          <input id="patientName" required maxlength="100"
+            placeholder="Enter patient name">
+
+          <label>Mobile Number</label>
+          <input id="patientPhone" maxlength="20"
+            placeholder="03XXXXXXXXX">
+
+          <label>Age</label>
+          <input id="patientAge" type="number" min="0" max="120"
+            placeholder="Enter age">
+
+          <label>Gender</label>
+          <select id="patientGender" required>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <button type="submit" id="savePatientButton">
+            Save Patient
+          </button>
+        </form>
+
+        <p id="patientMessage" role="status"></p>
+
+        <hr>
+        <h3>Patient Records</h3>
+        <input id="patientSearch"
+          placeholder="Search by patient name or mobile">
+        <div id="patientList">Loading records...</div>
+      </section>
+    `;
+
+    const form = document.getElementById("patientForm");
+    const msg = document.getElementById("patientMessage");
+    const list = document.getElementById("patientList");
+    const search = document.getElementById("patientSearch");
+
+    if (!branchId || !db || !auth.currentUser) {
+      msg.textContent = "Please sign in again and select your branch.";
+      list.textContent = "";
+      return;
+    }
+
+    let patients = [];
+
+    function renderPatients() {
+      const term = search.value.trim().toLowerCase();
+      const filtered = patients.filter(p =>
+        String(p.name || "").toLowerCase().includes(term) ||
+        String(p.phone || "").toLowerCase().includes(term)
+      );
+
+      if (!filtered.length) {
+        list.textContent = "No patient records found.";
+        return;
+      }
+
+      list.innerHTML = filtered.map(p => `
+        <div style="padding:12px;margin-top:10px;border:1px solid #ddd;border-radius:8px">
+          <b>${escapeHtml(p.name || "")}</b>
+          <p>Mobile: ${escapeHtml(p.phone || "N/A")}</p>
+          <p>Age: ${escapeHtml(p.age ?? "N/A")} |
+             Gender: ${escapeHtml(p.gender || "N/A")}</p>
+        </div>
+      `).join("");
+    }
+
+    async function loadPatients() {
+      list.textContent = "Loading records...";
+      try {
+        const snap = await db.collection("patients")
+          .where("branchId", "==", branchId)
+          .get();
+
+        patients = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        renderPatients();
+      } catch (err) {
+        console.error(err);
+        list.textContent =
+          "Could not load records. Check Firebase permissions and connection.";
+      }
+    }
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const button = document.getElementById("savePatientButton");
+      button.disabled = true;
+      msg.textContent = "Saving patient...";
+
+      try {
+        await db.collection("patients").add({
+          branchId: branchId,
+          name: document.getElementById("patientName").value.trim(),
+          phone: document.getElementById("patientPhone").value.trim(),
+          age: document.getElementById("patientAge").value === ""
+            ? null
+            : Number(document.getElementById("patientAge").value),
+          gender: document.getElementById("patientGender").value,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          createdBy: auth.currentUser.uid
+        });
+
+        form.reset();
+        msg.textContent = "Patient saved successfully.";
+        await loadPatients();
+      } catch (err) {
+        console.error(err);
+        msg.textContent =
+          "Save failed. Please check Firebase rules and internet connection.";
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    search.addEventListener("input", renderPatients);
+    loadPatients();
     return;
   }
 
