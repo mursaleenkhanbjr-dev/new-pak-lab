@@ -1032,11 +1032,22 @@ async function saveReport() {
         const docId = branchId + "_" +
             invoiceNo.replace(/[^a-zA-Z0-9_-]/g, "_");
 
-        await db.collection("invoices").doc(docId).set({
-            ...report,
-            branchId: branchId,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        await db.collection("invoices").doc(docId)
+const firebaseReport = JSON.parse(JSON.stringify(report));
+
+firebaseReport.tests = (report.tests || []).map(test => ({
+    title: test.title || "",
+    rows: (test.rows || []).map(row => ({
+        values: [...row]
+    }))
+}));
+
+await db.collection("invoices").doc(docId).set({
+    ...firebaseReport,
+    branchId: branchId,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+});
+;
 
         let records = [];
         try {
