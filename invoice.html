@@ -1469,6 +1469,18 @@ function toggleTheme() {
         button.title = isDark ? "Switch to light theme" : "Switch to dark theme";
     }
 }
+
+window.toggleTheme = function () {
+    document.body.classList.toggle("dark-theme");
+
+    const button = document.getElementById("themeToggle");
+
+    if (button) {
+        const isDark = document.body.classList.contains("dark-theme");
+        button.textContent = isDark ? "☀️" : "🌙";
+        button.title = isDark ? "Light theme" : "Dark theme";
+    }
+};
  </script>
 </body>
 
