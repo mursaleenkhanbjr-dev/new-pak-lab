@@ -768,13 +768,12 @@ const db = firebase.firestore();
             <div class="info-grid">
                 <section class="info">
                     <h3>Patient Information</h3>
-                    <div class="field"><label>Patient:</label><input id="patientName" placeholder="Patient name"></div>
-                    <div class="field"><label>Age:</label><input id="patientAge" placeholder="Age"></div>
-                    <div class="field"><label>Gender:</label><select id="gender">
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
-                        </select></div>
+                  <div class="field">
+    <label for="registeredPatient">Select Patient:</label>
+    <select id="registeredPatient" onchange="fillRegisteredPatient()">
+        <option value="">Select a patient</option>
+    </select>
+</div>
                     <div class="field"><label>Mobile:</label><input id="mobile" placeholder="Mobile number"></div>
                     <div class="field"><label>Referred:</label><input id="referred" placeholder="Doctor name"></div>
                 </section>
