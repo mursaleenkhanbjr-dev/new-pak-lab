@@ -735,7 +735,7 @@ const db = firebase.firestore();
         <button onclick="saveReport()">💾 Save Report</button>
         <button onclick="showSaved()">📂 Saved Reports</button>
         <button onclick="window.print()">🖨️ Print / Save PDF</button>
-        <button onclick="newReport()">＋ New Report</button>
+        <button onclick="newReport()">＋ New Invoice</button>
     </div>
 
     <div class="invoice" id="invoice">
@@ -1329,7 +1329,7 @@ function loadSelectedInvoice() {
 window.addEventListener("DOMContentLoaded", loadSelectedInvoice);
 
         function newReport() {
-            if (!confirm("New report banayein? Pehle report save kar lein.")) return;
+            if (!confirm("New Invoice banayein? Pehle report save kar lein.")) return;
             ["patientName", "patientAge", "mobile", "referred"].forEach(id => document.getElementById(id).value = "");
             document.getElementById("invoiceDate").value = new Date().toISOString().slice(0, 10);
             generateInvoiceNumber();
@@ -1337,9 +1337,11 @@ window.addEventListener("DOMContentLoaded", loadSelectedInvoice);
             document.getElementById("branch").selectedIndex = 0; updateAddress();
             document.getElementById("testList").innerHTML = '<div class="empty">Choose a test above and press Add Test.</div>';
         }
-        document.getElementById("invoiceDate").value = new Date().toISOString().slice(0, 10);
-        document.getElementById("invoiceTime").value = new Date().toTimeString().slice(0, 5);
-        document.getElementById("pathologist").addEventListener("input", e => document.getElementById("pathPrint").textContent = e.target.value); </script>
+      document.getElementById("invoiceDate").value = new Date().toISOString().slice(0, 10);
+document.getElementById("invoiceTime").value = new Date().toTimeString().slice(0, 5);
+generateInvoiceNumber();
+
+document.getElementById("pathologist").addEventListener("input", e => document.getElementById("pathPrint").textContent = e.target.value); </script>
 </body>
 
 </html>
