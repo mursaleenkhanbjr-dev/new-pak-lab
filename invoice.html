@@ -1340,15 +1340,41 @@ function loadSelectedInvoice() {
 
 window.addEventListener("DOMContentLoaded", loadSelectedInvoice);
 
-        function newReport() {
-            if (!confirm("New Invoice banayein? Pehle report save kar lein.")) return;
-            ["patientName", "patientAge", "mobile", "referred"].forEach(id => document.getElementById(id).value = "");
-            document.getElementById("invoiceDate").value = new Date().toISOString().slice(0, 10);
-            generateInvoiceNumber();
-            document.getElementById("invoiceTime").value = new Date().toTimeString().slice(0, 5);
-            document.getElementById("branch").selectedIndex = 0; updateAddress();
-            document.getElementById("testList").innerHTML = '<div class="empty">Choose a test above and press Add Test.</div>';
-        }
+       
+function newReport() {
+    if (!confirm("New Invoice banayein? Pehle purani invoice save kar lein.")) {
+        return;
+    }
+
+    // Patient ki details clear karein
+    ["patientName", "patientAge", "gender", "mobile", "referred"].forEach(id => {
+        const field = document.getElementById(id);
+        if (field) field.value = "";
+    });
+
+    // Nayi date, time aur invoice number
+    const now = new Date();
+
+    document.getElementById("invoiceDate").value =
+        now.getFullYear() + "-" +
+        String(now.getMonth() + 1).padStart(2, "0") + "-" +
+        String(now.getDate()).padStart(2, "0");
+
+    document.getElementById("invoiceTime").value =
+        String(now.getHours()).padStart(2, "0") + ":" +
+        String(now.getMinutes()).padStart(2, "0");
+
+    generateInvoiceNumber();
+
+    // Branch aur address ko default par rakhein
+    document.getElementById("branch").selectedIndex = 0;
+    updateAddress();
+
+    // Purane tests clear karein
+    document.getElementById("testList").innerHTML =
+        '<div class="empty">Choose a test above and press Add Test.</div>';
+}
+
       document.getElementById("invoiceDate").value = new Date().toISOString().slice(0, 10);
 document.getElementById("invoiceTime").value = new Date().toTimeString().slice(0, 5);
 generateInvoiceNumber();
