@@ -268,20 +268,307 @@ h1, h2, h3 {
         box-shadow: none !important;
     }
 }
+
+/* ===== NEW PAK LAB: PREMIUM INTERACTIVE LOGIN ===== */
+:root {
+  --npl-cyan: #35f5ff;
+  --npl-blue: #197dff;
+  --npl-violet: #7556ff;
+  --npl-teal: #00f0c8;
+}
+
+.login-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100vh;
+  grid-template-columns: 1.05fr .95fr;
+  grid-template-rows: auto 1fr;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,40%),
+      #087aff35, transparent 30%),
+    linear-gradient(135deg,#020b22,#041b40 55%,#00152c);
+  color: #f2fcff;
+}
+
+.login-nav {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 18px 4%;
+  background: #03132be8;
+  border-bottom: 1px solid #35f5ff55;
+  box-shadow: 0 8px 30px #007bff20;
+  position: relative;
+  z-index: 2;
+}
+
+.nav-brand {
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 0 18px #35f5ff75;
+}
+
+.nav-brand span {
+  color: var(--npl-cyan);
+  font-size: 28px;
+  margin-right: 8px;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nav-links button {
+  color: #d7efff;
+  background: #082650;
+  border: 1px solid #168eff66;
+  border-radius: 24px;
+  padding: 10px 15px;
+  box-shadow: inset 0 1px 0 #ffffff20, 0 4px 0 #02091b;
+  transition: .25s ease;
+}
+
+.nav-links button:hover,
+.nav-links button:focus-visible {
+  color: white;
+  background: linear-gradient(120deg,#087fff,#713eff);
+  box-shadow: 0 0 12px #168eff, 0 0 25px #35f5ff50;
+  transform: translateY(-3px);
+}
+
+.login-hero {
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,40%),#08bfff50,transparent 38%),
+    linear-gradient(145deg,#03102c,#06376a 65%,#042347);
+  border-right: 1px solid #35f5ff40;
+}
+
+.login-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg,transparent 35%,#ffffff0c 48%,#35f5ff12 52%,transparent 65%);
+  background-size: 220% 100%;
+  animation: nplLightSweep 9s linear infinite;
+}
+
+@keyframes nplLightSweep {
+  from { background-position: 150% 0; }
+  to { background-position: -100% 0; }
+}
+
+.brand,
+.hero-title {
+  color: white;
+  text-shadow: 0 0 20px #35f5ff45;
+}
+
+.hero-copy { color: #c5eaff; }
+
+.hero-points {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(125px,170px));
+  justify-content: start;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.hero-point {
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 9px;
+  padding: 14px;
+  border-radius: 50%;
+  color: #eaffff;
+  background: radial-gradient(circle at 30% 20%,#1168a7,#04152f 72%);
+  border: 2px solid #159fff;
+  box-shadow: 0 0 10px #168fff, inset 0 0 20px #168fff45,
+              inset 0 2px 5px #ffffff30, 0 12px 28px #0007;
+  transition: transform .2s ease, box-shadow .2s ease;
+  will-change: transform;
+}
+
+.hero-point:nth-child(2) {
+  border-color: #00f0c8;
+  box-shadow: 0 0 12px #00f0c8, inset 0 0 20px #00f0c840, 0 12px 28px #0007;
+}
+.hero-point:nth-child(3) {
+  border-color: #8864ff;
+  box-shadow: 0 0 12px #8864ff, inset 0 0 20px #8864ff45, 0 12px 28px #0007;
+}
+.hero-point:nth-child(4) {
+  border-color: #ffbd42;
+  box-shadow: 0 0 12px #ffbd42, inset 0 0 20px #ffbd4240, 0 12px 28px #0007;
+}
+
+.circle-icon { font-size: 30px; color: var(--npl-cyan); }
+.hero-point b { font-size: 13px; }
+.hero-point small { font-size: 10px; color: #bcecff; }
+
+.login-side {
+  position: relative;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,40%),#087aff35,transparent 45%),
+    #03142c;
+}
+
+.login-card {
+  position: relative;
+  overflow: hidden;
+  color: #edfbff;
+  background: linear-gradient(145deg,#092c53ed,#04152ff5);
+  border: 1px solid #20cfff99;
+  border-radius: 25px;
+  box-shadow: 0 0 15px #078bff60, 0 0 42px #087aff25,
+              inset 0 2px 0 #ffffff25, inset 0 -2px 0 #35f5ff20;
+  backdrop-filter: blur(18px);
+  transition: box-shadow .25s ease, transform .2s ease;
+}
+
+.login-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 65%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(100deg,transparent,#ffffff20,#35f5ff25,transparent);
+  transform: skewX(-18deg);
+  animation: nplCardReflection 7s ease-in-out infinite;
+}
+
+@keyframes nplCardReflection {
+  0%,20% { left: -120%; }
+  75%,100% { left: 150%; }
+}
+
+.login-card h2 { color: #72f7ff; }
+.login-card .muted,
+.login-card .safe-note { color: #b9d9ed; }
+
+.login-card .field input,
+.login-card .field select {
+  color: #f2fcff;
+  background: #041a35;
+  border: 1px solid #168eff88;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 7px #0005;
+}
+
+.login-card .field select option {
+  background: #041a35;
+  color: white;
+}
+
+.login-card .field input:focus,
+.login-card .field select:focus {
+  border-color: var(--npl-cyan);
+  box-shadow: 0 0 0 3px #35f5ff20, 0 0 17px #35f5ff35;
+}
+
+.login-icon {
+  color: white;
+  background: linear-gradient(145deg,#087fff,#6d4cff);
+  border: 1px solid #7af5ff;
+  border-radius: 50%;
+  box-shadow: 0 0 22px #168fff90, inset 0 2px 4px #ffffff70;
+}
+
+.login-submit {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #b7ffff;
+  border-radius: 30px;
+  background: linear-gradient(110deg,#00cfff,#216cff,#714cff,#00e9cf);
+  background-size: 220% 100%;
+  color: white;
+  box-shadow: 0 5px 0 #064a9c, 0 0 16px #087fff90,
+              inset 0 2px 0 #ffffff80;
+  transition: transform .2s ease, box-shadow .2s ease, background-position .4s ease;
+}
+
+.login-submit:hover {
+  transform: translateY(-3px);
+  background-position: 100% 0;
+  box-shadow: 0 7px 0 #064a9c, 0 0 15px #35f5ff,
+              0 0 30px #087fff80;
+}
+
+.login-submit:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #064a9c, inset 0 2px 5px #0004;
+}
+
+.login-submit:disabled { opacity: .75; cursor: wait; }
+
+@media(max-width:700px) {
+  .login-page { grid-template-columns: 1fr; }
+  .login-nav { align-items: flex-start; }
+  .nav-links { gap: 5px; }
+  .nav-links button { padding: 8px 10px; font-size: 12px; }
+  .hero-points { grid-template-columns: repeat(2,minmax(115px,145px)); justify-content: center; }
+  .hero-point { max-width: 145px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .login-hero::before,
+  .login-card::before { animation: none; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
 </style>
 </head>
 <body>
 <section id="loginScreen" class="login-page">
-  <div class="login-hero">
+ <nav class="login-nav">
+  <div class="nav-brand"><span>⚗</span> NEW PAK LAB</div>
+  <div class="nav-links">
+    <button type="button" data-login-nav="Home">⌂ Home</button>
+    <button type="button" data-login-nav="About">⬡ About</button>
+    <button type="button" data-login-nav="Services">▤ Services</button>
+    <button type="button" data-login-nav="Branches">♧ Branches</button>
+    <button type="button" data-login-nav="Contact">☎ Contact</button>
+  </div>
+</nav> <div class="login-hero">
     <div class="brand">✚ NEW PAK LAB <small>MEDICAL LABORATORY MANAGEMENT</small></div>
     <h1 class="hero-title">Better care begins with better information.</h1>
     <p class="hero-copy">A central workspace for laboratory teams, branch operations and patient-service administration.</p>
     <div class="hero-points">
-      <div class="hero-point">🛡️ &nbsp; Secure sign-in through Firebase Authentication</div>
-      <div class="hero-point">🏥 &nbsp; Branch-based access control</div>
-      <div class="hero-point">📋 &nbsp; One organized administration workspace</div>
-    </div>
+  <div class="hero-point">
+    <span class="circle-icon">⚗</span>
+    <b>Laboratory Tests</b>
+    <small>Accurate & Reliable</small>
   </div>
+  <div class="hero-point">
+    <span class="circle-icon">♧</span>
+    <b>Patient Care</b>
+    <small>Your Health, Our Priority</small>
+  </div>
+  <div class="hero-point">
+    <span class="circle-icon">▤</span>
+    <b>Digital Reports</b>
+    <small>Fast & Secure</small>
+  </div>
+  <div class="hero-point">
+    <span class="circle-icon">♧</span>
+    <b>Multiple Branches</b>
+    <small>Wide Coverage</small>
+  </div>
+</div>
   <div class="login-side">
     <form class="login-card" id="loginForm">
       <div class="login-icon">🧪</div>
@@ -796,6 +1083,79 @@ document.getElementById("menuButton").addEventListener("click", function () {
   document.getElementById("sidebar").classList.toggle("open");
 });
 
+
+/* New Pak Lab mouse-follow glow and 3D circles */
+(function () {
+  const login = document.getElementById("loginScreen");
+  if (!login) return;
+
+  let frame = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+
+  login.addEventListener("pointermove", function (event) {
+    const rect = login.getBoundingClientRect();
+    pointerX = event.clientX - rect.left;
+    pointerY = event.clientY - rect.top;
+
+    if (frame) return;
+
+    frame = requestAnimationFrame(function () {
+      login.style.setProperty("--mx", pointerX + "px");
+      login.style.setProperty("--my", pointerY + "px");
+
+      const circles = login.querySelectorAll(".hero-point");
+      circles.forEach(function (circle) {
+        const r = circle.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (event.clientX - cx) / 35;
+        const dy = (event.clientY - cy) / 35;
+
+        circle.style.transform =
+          "perspective(500px) rotateX(" + (-dy) +
+          "deg) rotateY(" + dx + "deg) translateY(-2px)";
+      });
+
+      frame = 0;
+    });
+  });
+
+  login.addEventListener("pointerleave", function () {
+    login.style.setProperty("--mx", "50%");
+    login.style.setProperty("--my", "40%");
+    login.querySelectorAll(".hero-point").forEach(function (circle) {
+      circle.style.transform = "";
+    });
+  });
+
+  login.querySelectorAll("[data-login-nav]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const section = button.dataset.loginNav;
+
+      if (section === "Home") {
+        login.querySelector(".login-card")?.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      } else if (section === "Branches") {
+        document.getElementById("branch")?.focus();
+        document.getElementById("branch")?.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      } else {
+        const messages = {
+          About: "New Pak Lab — Medical Laboratory Management System",
+          Services: "Laboratory Tests, Patient Care and Digital Reports",
+          Contact: "Please contact your laboratory administrator."
+        };
+        const msg = document.getElementById("loginMessage");
+        if (msg) msg.textContent = messages[section] || "";
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>
