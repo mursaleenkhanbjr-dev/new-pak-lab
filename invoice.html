@@ -669,50 +669,101 @@
             }
         }
   
-        /* New Pak Lab Theme Switcher */
-        body.dark-theme {
-            background: #101827;
-            color: #e5edf7;
-        }
+       
+/* New Pak Lab - Premium Banking Theme */
+:root {
+    --blue: #073b35;
+    --cyan: #16b89a;
+    --line: #d5e8e2;
+    --bank-bg: #f2f7f5;
+    --bank-card: #ffffff;
+    --bank-text: #173c37;
+    --bank-glow: rgba(22, 184, 154, 0.35);
+}
 
-        body.dark-theme .invoice,
-        body.dark-theme .note {
-            background-color: #182438;
-            color: #e5edf7;
-            border-color: #33445c;
-        }
+body {
+    background: var(--bank-bg);
+    color: var(--bank-text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
 
-        body.dark-theme .field input,
-        body.dark-theme .field select {
-            background-color: #243247;
-            color: #ffffff;
-            border-color: #52647c;
-        }
+.invoice,
+.note {
+    background: var(--bank-card);
+    color: var(--bank-text);
+    border-color: var(--line);
+    transition: background 0.3s ease, color 0.3s ease;
+}
 
-        body.dark-theme table th {
-            background-color: #173c5b;
-            color: #ffffff;
-        }
+/* Invoice toolbar buttons */
+button,
+.theme-toggle {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+}
 
-        body.dark-theme table td {
-            border-color: #46566c;
-        }
+button:hover,
+.theme-toggle:hover {
+    background: linear-gradient(135deg, #087e6d, #16b89a);
+    color: #ffffff;
+    box-shadow:
+        0 0 5px #16b89a,
+        0 0 12px var(--bank-glow),
+        0 0 22px rgba(22, 184, 154, 0.25);
+    transform: translateY(-2px);
+}
 
-        body.dark-theme .footer,
-        body.dark-theme .lab-contact-footer {
-            color: #e5edf7;
-        }
+button:active,
+.theme-toggle:active {
+    transform: scale(0.97);
+}
 
-        .theme-toggle {
-            width: 42px;
-            height: 42px;
-            border: none;
-            border-radius: 50%;
-            background: #075493;
-            color: white;
-            font-size: 21px;
-            cursor: pointer;
-        }
+.theme-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #073b35;
+    color: #ffffff;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+/* Dark banking theme */
+body.dark-theme {
+    background: #101c20;
+    color: #e7f4f0;
+}
+
+body.dark-theme .invoice,
+body.dark-theme .note {
+    background: #192a2d;
+    color: #e7f4f0;
+    border-color: #35504d;
+}
+
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+    background: #24383a;
+    color: #ffffff;
+    border-color: #48615d;
+}
+
+body.dark-theme table th {
+    background: #07594c;
+    color: #ffffff;
+}
+
+body.dark-theme table td {
+    border-color: #35504d;
+}
+
+body.dark-theme .footer,
+body.dark-theme .lab-contact-footer {
+    background: #192a2d;
+    color: #e7f4f0;
+}
   </style>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
