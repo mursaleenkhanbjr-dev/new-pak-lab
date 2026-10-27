@@ -366,28 +366,114 @@ function openPage(page) {
 
     let patients = [];
 
-    function renderPatients() {
-      const term = search.value.trim().toLowerCase();
-      const filtered = patients.filter(p =>
-        String(p.name || "").toLowerCase().includes(term) ||
-        String(p.phone || "").toLowerCase().includes(term)
-      );
+   function renderPatients() {
+  const term = search.value.trim().toLowerCase();
 
-      if (!filtered.length) {
-        list.textContent = "No patient records found.";
+  const filtered = patients.filter(p =>
+    String(p.name || "").toLowerCase().includes(term) ||
+    String(p.phone || "").toLowerCase().includes(term)
+  );
+
+  if (!filtered.length) {
+    list.textContent = "No patient records found.";
+    return;
+  }
+
+  list.innerHTML = filtered.map(p => `
+    <div style="padding:12px;margin-top:10px;border:1px solid #ddd;border-radius:8px">
+      <b>${escapeHtml(p.name || "")}</b>
+      <p>Mobile: ${escapeHtml(p.phone || "N/A")}</p>
+      <p>Age: ${escapeHtml(p.age ?? "N/A")} |
+         Gender: ${escapeHtml(p.gender || "N/A")}</p>
+
+      <button type="button" data-edit-id="${escapeHtml(p.id)}">
+        Edit
+      </button>
+
+      <button type="button" data-delete-id="${escapeHtml(p.id)}">
+        Delete
+      </button>
+    </div>
+  `).join("");
+
+  list.querySelectorAll("[data-edit-id]").forEach(button => {
+    button.addEventListener("click", async function() {
+      const patient = patients.find(p => p.id === this.dataset.editId);
+      if (!patient) return;
+
+      const name = prompt("Patient name:", patient.name || "");
+      if (name === null) return;
+
+      if (!name.trim()) {
+        alert("Patient name zaroor likhein.");
         return;
       }
 
-      list.innerHTML = filtered.map(p => `
-        <div style="padding:12px;margin-top:10px;border:1px solid #ddd;border-radius:8px">
-          <b>${escapeHtml(p.name || "")}</b>
-          <p>Mobile: ${escapeHtml(p.phone || "N/A")}</p>
-          <p>Age: ${escapeHtml(p.age ?? "N/A")} |
-             Gender: ${escapeHtml(p.gender || "N/A")}</p>
-        </div>
-      `).join("");
-    }
+      const phone = prompt("Mobile number:", patient.phone || "");
+      if (phone === null) return;
 
+      const ageText = prompt(
+        "Age:", patient.age == null ? "" : String(patient.age)
+      );
+      if (ageText === null) return;
+
+      let age = null;
+      if (ageText.trim() !== "") {
+        age = Number(ageText);
+        if (!Number.isInteger(age) || age < 0 || age > 120) {
+          alert("Age 0 se 120 ke darmiyan honi chahiye.");
+          return;
+        }
+      }
+
+      const gender = prompt(
+        "Gender: Male, Female, or Other",
+        patient.gender || "Other"
+      );
+      if (gender === null) return;
+
+      if (!["Male", "Female", "Other"].includes(gender.trim())) {
+        alert("Gender Male, Female, ya Other likhein.");
+        return;
+      }
+
+      try {
+        await db.collection("patients").doc(patient.id).update({
+          name: name.trim(),
+          phone: phone.trim(),
+          age: age,
+          gender: gender.trim()
+        });
+
+        alert("Patient record updated successfully.");
+        await loadPatients();
+      } catch (err) {
+        console.error(err);
+        alert("Update failed. Firebase permissions check karein.");
+      }
+    });
+  });
+
+  list.querySelectorAll("[data-delete-id]").forEach(button => {
+    button.addEventListener("click", async function() {
+      const patient = patients.find(p => p.id === this.dataset.deleteId);
+      if (!patient) return;
+
+      if (!confirm(
+        "Kya aap waqai patient " + patient.name + " ka record delete karna chahte hain?"
+      )) return;
+
+      try {
+        await db.collection("patients").doc(patient.id).delete();
+        alert("Patient record deleted.");
+        await loadPatients();
+      } catch (err) {
+        console.error(err);
+        alert("Delete failed. Firebase permissions check karein.");
+      }
+    });
+  });
+}
     async function loadPatients() {
       list.textContent = "Loading records...";
       try {
