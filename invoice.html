@@ -988,7 +988,33 @@ const db = firebase.firestore();
                         border: 1px solid #b9d9ed;
                         background: white;
                     }
-                </style>
+             
+/* Professional glowing button effect */
+button,
+.theme-toggle {
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+button:hover,
+.theme-toggle:hover {
+    box-shadow:
+        0 0 6px #08a4db,
+        0 0 14px #08a4db,
+        0 0 24px rgba(8, 164, 219, 0.55);
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+
+button:focus-visible,
+.theme-toggle:focus-visible {
+    outline: 2px solid #08a4db;
+    outline-offset: 3px;
+}
+   </style>
             </head>
             <body>
                 <h2>Imported Image - Layout Reference</h2>
