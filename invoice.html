@@ -668,7 +668,52 @@
                 print-color-adjust: exact !important;
             }
         }
-    </style>
+  
+        /* New Pak Lab Theme Switcher */
+        body.dark-theme {
+            background: #101827;
+            color: #e5edf7;
+        }
+
+        body.dark-theme .invoice,
+        body.dark-theme .note {
+            background-color: #182438;
+            color: #e5edf7;
+            border-color: #33445c;
+        }
+
+        body.dark-theme .field input,
+        body.dark-theme .field select {
+            background-color: #243247;
+            color: #ffffff;
+            border-color: #52647c;
+        }
+
+        body.dark-theme table th {
+            background-color: #173c5b;
+            color: #ffffff;
+        }
+
+        body.dark-theme table td {
+            border-color: #46566c;
+        }
+
+        body.dark-theme .footer,
+        body.dark-theme .lab-contact-footer {
+            color: #e5edf7;
+        }
+
+        .theme-toggle {
+            width: 42px;
+            height: 42px;
+            border: none;
+            border-radius: 50%;
+            background: #075493;
+            color: white;
+            font-size: 21px;
+            cursor: pointer;
+        }
+  </style>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -736,6 +781,13 @@ const db = firebase.firestore();
         <button onclick="showSaved()">📂 Saved Reports</button>
         <button onclick="window.print()">🖨️ Print / Save PDF</button>
         <button onclick="newReport()">＋ New Invoice</button>
+<button type="button"
+        class="theme-toggle no-print"
+        id="themeToggle"
+        onclick="toggleTheme()"
+        title="Change theme"
+        aria-label="Change theme">🌙</button>
+
     </div>
 
     <div class="invoice" id="invoice">
