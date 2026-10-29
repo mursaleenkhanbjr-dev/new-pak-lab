@@ -696,7 +696,74 @@ body {
     margin-top: 12px;
   }
 }
-</style>
+/* Light / Dark Theme Button */
+.theme-toggle {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px;
+  border: 1px solid #4b83a8;
+  border-radius: 10px;
+  background: transparent;
+  color: #eaf4ff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: rgba(100, 180, 255, 0.14);
+}
+
+/* Light Mode Colors */
+body.light-theme {
+  background: #edf4fa;
+  color: #172b3b;
+}
+
+body.light-theme .login-page {
+  background: #edf4fa;
+  color: #172b3b;
+}
+
+body.light-theme .login-hero,
+body.light-theme .login-card {
+  background: #ffffff;
+  color: #172b3b;
+  border-color: #d6e2ed;
+}
+
+body.light-theme .hero-title,
+body.light-theme .login-card h2,
+body.light-theme .brand {
+  color: #123b5a;
+}
+
+body.light-theme .hero-point,
+body.light-theme .muted,
+body.light-theme .safe-note,
+body.light-theme .login-card p {
+  color: #526779;
+}
+
+body.light-theme .login-card label {
+  color: #29465d;
+}
+
+body.light-theme .login-card input,
+body.light-theme .login-card select {
+  background: #f7fafc;
+  color: #172b3b;
+  border-color: #cbd9e5;
+}
+
+body.light-theme .theme-toggle {
+  color: #123b5a;
+  border-color: #9bb8ce;
+}
+
+body.light-theme .theme-toggle:hover {
+  background: #e5f1fa;
+}</style>
 </head>
 <body>
 <section id="loginScreen" class="login-page">
