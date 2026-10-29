@@ -530,6 +530,172 @@ h1, h2, h3 {
   .login-card::before { animation: none; }
   *, *::before, *::after { scroll-behavior: auto !important; }
 }
+
+/* NEW PAK LAB — 3D LOGIN DESIGN */
+body {
+  background: #061329;
+}
+
+.login-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  grid-template-columns: 1fr 0.9fr;
+  background:
+    radial-gradient(ellipse at 20% 15%, #174f83 0%, transparent 42%),
+    linear-gradient(135deg, #061329, #0b2445 55%, #06101f);
+  overflow: hidden;
+}
+
+.login-hero {
+  background:
+    radial-gradient(circle at 70% 30%, #24d8ff50, transparent 25%),
+    linear-gradient(145deg, #081a35, #0b3764 65%, #087caa);
+}
+
+.brand {
+  letter-spacing: 2px;
+  text-shadow: 0 0 18px #55dfff70;
+}
+
+.hero-title {
+  text-shadow: 0 5px 25px #00102080;
+}
+
+.hero-point {
+  border: 1px solid #62dfff55;
+  background: linear-gradient(135deg, #ffffff18, #ffffff05);
+  box-shadow: inset 0 1px 0 #ffffff25, 0 8px 25px #00102035;
+  backdrop-filter: blur(14px);
+  transition: transform .25s, border-color .25s;
+}
+
+.hero-point:hover {
+  transform: translateX(6px);
+  border-color: #55e5ff;
+}
+
+.login-side {
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 35%, #14619a55, transparent 45%),
+    linear-gradient(145deg, #0a1b34, #071326);
+}
+
+.login-card {
+  position: relative;
+  color: #eaf8ff;
+  background: linear-gradient(145deg, #102d4c, #08192e);
+  border: 1px solid #48d7ff65;
+  border-radius: 26px;
+  box-shadow:
+    0 25px 65px #0008,
+    inset 0 1px 1px #ffffff25,
+    0 0 28px #00bfff20;
+}
+
+.login-card h2 {
+  color: #ffffff;
+}
+
+.login-card .muted,
+.login-card .safe-note {
+  color: #b4cde3;
+}
+
+.login-icon {
+  border: 1px solid #60e4ff80;
+  background: linear-gradient(145deg, #1a7099, #122b59);
+  box-shadow: 0 0 24px #00cfff35, inset 0 1px 2px #ffffff55;
+}
+
+.field label {
+  color: #d9f3ff;
+}
+
+.field input,
+.field select {
+  color: #f3fbff;
+  background: #06182b;
+  border: 1px solid #315a7a;
+}
+
+.field input::placeholder {
+  color: #829eb7;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #36dfff;
+  box-shadow: 0 0 0 3px #24d8ff25;
+}
+
+.primary {
+  background: linear-gradient(120deg, #0879bb, #13b9d7);
+  box-shadow: 0 8px 25px #00bfff35, inset 0 1px 1px #ffffff55;
+}
+
+.primary:hover {
+  box-shadow: 0 0 28px #00cfff55;
+}
+
+@media (max-width: 700px) {
+  .login-page {
+    grid-template-columns: 1fr;
+    overflow: auto;
+  }
+
+  .login-hero {
+    min-height: auto;
+    padding: 22px 20px 16px;
+  }
+
+  .hero-title {
+    font-size: 29px;
+    margin: 20px 0 8px;
+  }
+
+  .hero-copy {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .login-side {
+    padding: 14px 16px 24px;
+  }
+
+  .login-card {
+    max-width: 440px;
+    padding: 22px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 701px) {
+  .login-hero {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+
+  .hero-title {
+    margin-top: 25px;
+    font-size: clamp(28px, 3.4vw, 44px);
+  }
+
+  .login-card {
+    padding: 24px;
+  }
+
+  .login-card h2 {
+    margin-top: 14px;
+  }
+
+  .field {
+    margin: 12px 0;
+  }
+
+  .safe-note {
+    margin-top: 12px;
+  }
+}
 </style>
 </head>
 <body>
