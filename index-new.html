@@ -863,6 +863,61 @@ body:not(.light-theme) .hero-point strong {
 body:not(.light-theme) .hero-title {
   color: #ff626d;
   text-shadow: 0 0 12px rgba(255, 40, 60, 0.3);
+}/* FIX: Keep Light Mode text blue, not red */
+body.light-theme .hero-title {
+  color: #123b5a !important;
+  text-shadow: none !important;
+}
+
+body.light-theme .login-hero p {
+  color: #526779 !important;
+  text-shadow: none !important;
+}
+
+body.light-theme .hero-point {
+  color: #29465d !important;
+  text-shadow: none !important;
+}
+
+body.light-theme .hero-point strong {
+  color: #123b5a !important;
+  text-shadow: none !important;
+}
+
+/* Mobile layout improvements */
+@media (max-width: 600px) {
+  .login-page {
+    padding: 16px !important;
+    gap: 20px !important;
+  }
+
+  .login-hero,
+  .login-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-title {
+    font-size: clamp(25px, 7vw, 34px) !important;
+    line-height: 1.25 !important;
+  }
+
+  .hero-point {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+
+  .login-card {
+    padding: 22px 18px !important;
+  }
+
+  .login-card input,
+  .login-card select,
+  .login-card button {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }</style>
 </head>
 <body>
