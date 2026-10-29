@@ -792,6 +792,57 @@ body:not(.light-theme) .login-card h2 {
 body:not(.light-theme) .muted,
 body:not(.light-theme) .safe-note {
   color: #cbd9e8;
+}/* New Pak Lab - Premium Dark Mode */
+body:not(.light-theme) .login-hero p {
+  color: #8deaff;
+  text-shadow: 0 0 8px rgba(0, 220, 255, 0.18);
+}
+
+body:not(.light-theme) .hero-point {
+  color: #b9f4ff;
+  font-weight: 600;
+  text-shadow: 0 0 7px rgba(0, 220, 255, 0.22);
+}
+
+body:not(.light-theme) .hero-point strong {
+  color: #ffffff;
+}
+
+body:not(.light-theme) .hero-title {
+  color: #f2fbff;
+  text-shadow: 0 0 12px rgba(75, 205, 255, 0.2);
+}
+
+/* Glossy laboratory icon effect */
+.lab-icon,
+.hero-point .lab-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  filter: drop-shadow(0 3px 2px #061526)
+          drop-shadow(0 0 7px rgba(0, 225, 255, 0.45));
+  transition: transform 0.25s ease, filter 0.25s ease;
+  animation: labFloat 3s ease-in-out infinite;
+}
+
+.lab-icon:hover,
+.hero-point:hover .lab-icon {
+  transform: translateY(-5px) scale(1.15) rotate(-5deg);
+  filter: drop-shadow(0 0 12px #00e5ff);
+}
+
+@keyframes labFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-icon,
+  .hero-point .lab-icon {
+    animation: none;
+    transition: none;
+  }
 }</style>
 </head>
 <body>
