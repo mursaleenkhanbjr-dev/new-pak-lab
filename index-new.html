@@ -918,6 +918,72 @@ body.light-theme .hero-point strong {
     max-width: 100%;
     box-sizing: border-box;
   }
+}/* DARK MODE: WHITE TEXT */
+body:not(.light-theme) .hero-title,
+body:not(.light-theme) .login-hero p,
+body:not(.light-theme) .hero-point,
+body:not(.light-theme) .hero-point strong {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15) !important;
+}
+
+/* LIGHT MODE: BLUE TEXT */
+body.light-theme .hero-title,
+body.light-theme .hero-point strong {
+  color: #123b5a !important;
+  text-shadow: none !important;
+}
+
+body.light-theme .login-hero p,
+body.light-theme .hero-point {
+  color: #526779 !important;
+  text-shadow: none !important;
+}/* GLOSSY LAB ICONS */
+.lab-icon,
+.hero-point .lab-icon,
+.login-icon,
+nav svg,
+aside svg,
+.sidebar svg,
+.nav-icon,
+button svg {
+  filter:
+    drop-shadow(0 2px 1px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 5px rgba(65, 210, 255, 0.35));
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+/* REFLECTIVE HOVER */
+.lab-icon:hover,
+.hero-point:hover .lab-icon,
+nav a:hover svg,
+aside a:hover svg,
+.sidebar a:hover svg,
+button:hover svg {
+  transform: translateY(-3px) scale(1.12);
+  filter:
+    drop-shadow(0 3px 2px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 11px rgba(100, 225, 255, 0.85));
+}
+
+/* ICON HIGHLIGHT IN DARK MODE */
+body:not(.light-theme) .login-icon {
+  filter:
+    drop-shadow(0 3px 2px #071827)
+    drop-shadow(0 0 12px rgba(80, 220, 255, 0.6));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-icon,
+  .hero-point .lab-icon,
+  .login-icon,
+  nav svg,
+  aside svg,
+  .sidebar svg,
+  .nav-icon,
+  button svg {
+    transition: none;
+  }
 }</style>
 </head>
 <body>
