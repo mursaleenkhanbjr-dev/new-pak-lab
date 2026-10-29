@@ -1394,6 +1394,19 @@ document.getElementById("menuButton").addEventListener("click", function () {
     });
   });
 })();
-</script>
+// Light and Dark Mode Toggle
+const themeToggle = document.getElementById("themeToggle");
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", function () {
+    document.body.classList.toggle("light-theme");
+
+    if (document.body.classList.contains("light-theme")) {
+      themeToggle.textContent = "🌙 Dark Mode";
+    } else {
+      themeToggle.textContent = "☀️ Light Mode";
+    }
+  });
+}</script>
 </body>
 </html>
