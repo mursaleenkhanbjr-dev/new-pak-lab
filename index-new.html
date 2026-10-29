@@ -1629,5 +1629,17 @@ if (themeToggle) {
   });
 }
 </script>
-</body>
+</body><script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js")
+      .then(function () {
+        console.log("Offline cache ready");
+      })
+      .catch(function (error) {
+        console.error("Service Worker error:", error);
+      });
+  });
+}
+</script>
 </html>
