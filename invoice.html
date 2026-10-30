@@ -991,7 +991,55 @@
                         border: 1px solid #b9d9ed;
                         background: white;
                     }
-                </style>
+             
+/* Molded 3D Reflective Buttons */
+button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(255,255,255,.72) !important;
+  border-radius: 11px !important;
+  padding: 10px 15px !important;
+  background: linear-gradient(155deg, #f8fdff, #a9d9f4 13%, #2589c4 42%, #075493 76%, #04365f) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0,25,50,.7);
+  box-shadow: 0 5px 0 #032e50, 0 8px 13px rgba(0,35,65,.28),
+    inset 0 2px 2px rgba(255,255,255,.85),
+    inset 0 -3px 5px rgba(0,0,0,.25) !important;
+  transition: all .16s ease;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 5%;
+  top: 2px;
+  width: 90%;
+  height: 43%;
+  border-radius: 9px 9px 55% 55%;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.72),
+    rgba(255,255,255,.08)
+  );
+  pointer-events: none;
+}
+
+button:hover {
+  filter: brightness(1.1) saturate(1.08);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(4px);
+}
+
+button.red {
+  background: linear-gradient(155deg, #fff5f5, #f5aaaa 13%, #dc5555 45%, #a91f2b 78%, #74101c) !important;
+}
+   </style>
             </head>
             <body>
                 <h2>Imported Image - Layout Reference</h2>
