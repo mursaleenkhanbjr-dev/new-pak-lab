@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Pak Lab | Admin Portal</title>
+<style>
+:root{--navy:#102a56;--blue:#1769aa;--cyan:#37b7d8;--bg:#f2f6fc;--white:#fff;--text:#243650;--muted:#71819a;--line:#e3eaf4;--green:#15966a;--shadow:0 14px 35px rgba(22,54,99,.12)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.login-page{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;background:#fff}.login-hero{padding:clamp(28px,6vw,76px);color:white;background:radial-gradient(circle at 85% 15%,#43c4e0 0,transparent 30%),linear-gradient(145deg,#102a56,#1769aa 65%,#2299c7);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.login-hero:after{content:"";position:absolute;width:350px;height:350px;border:1px solid #ffffff28;border-radius:50%;right:-100px;bottom:-100px;box-shadow:0 0 0 35px #ffffff0c,0 0 0 75px #ffffff09}.brand{font-size:22px;font-weight:850;letter-spacing:.2px}.brand small{display:block;font-size:11px;letter-spacing:2px;margin-top:6px;opacity:.8}.hero-title{font-size:clamp(32px,4vw,54px);line-height:1.08;margin:50px 0 18px;max-width:620px}.hero-copy{max-width:490px;line-height:1.8;color:#e5f4ff}.hero-points{display:grid;gap:12px;margin-top:30px}.hero-point{padding:13px 15px;border:1px solid #ffffff30;border-radius:14px;background:#ffffff10;max-width:390px;backdrop-filter:blur(8px)}.login-side{display:grid;place-items:center;padding:28px;background:linear-gradient(145deg,#f8fbff,#eaf2fc)}.login-card{width:100%;max-width:420px;padding:clamp(24px,4vw,40px);background:white;border:1px solid #e5edf8;border-radius:26px;box-shadow:0 25px 65px #153b6b18}.login-icon{width:62px;height:62px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(145deg,#dff6ff,#e7edff);font-size:29px;box-shadow:inset 0 2px 3px #fff,0 8px 18px #1769aa18}.login-card h2{margin:22px 0 7px;font-size:27px}.muted{color:var(--muted)}.field{display:grid;gap:8px;margin:17px 0}.field label{font-size:13px;font-weight:750}.field input,.field select{width:100%;padding:13px 14px;border:1px solid #d9e3f0;border-radius:12px;background:#fbfdff;outline:none}.field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1769aa15}.primary{border:0;color:#fff;font-weight:800;border-radius:12px;padding:13px 17px;background:linear-gradient(120deg,#1769aa,#1a91c3);box-shadow:0 9px 20px #1769aa30}.primary:hover{transform:translateY(-1px);filter:brightness(1.04)}.login-submit{width:100%;margin-top:8px}.message{font-size:13px;line-height:1.5;margin-top:13px;color:#b42318}.safe-note{font-size:12px;color:var(--muted);margin-top:22px;line-height:1.6}
+
+.app{
+  min-height:100vh;
+  height:100vh;
+  display:grid;
+  grid-template-columns:255px minmax(0,1fr);
+  overflow:hidden;
+}
+
+.sidebar{
+  background:linear-gradient(180deg,#102a56,#123c70);
+  color:white;
+  padding:22px 15px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  height:100vh;
+  overflow-y:auto;
+  position:sticky;
+  top:0;
+}
+.side-brand{display:flex;gap:11px;align-items:center;padding:7px 9px 23px;border-bottom:1px solid #ffffff20}.brand-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#48c8e3,#2781c6);font-size:22px;box-shadow:0 7px 17px #0002}.side-brand b{display:block;font-size:15px}.side-brand small{display:block;font-size:10px;color:#bcd7f3;margin-top:4px;letter-spacing:1px}.nav-label{font-size:10px;letter-spacing:1.7px;color:#9db9dc;padding:0 12px}.nav{display:grid;gap:6px}.nav button{display:flex;align-items:center;gap:12px;text-align:left;color:#d5e5f8;background:transparent;border:1px solid transparent;padding:12px;border-radius:12px;font-weight:650;font-size:13px}.nav button span{width:23px;text-align:center;font-size:17px}.nav button:hover,.nav button.active{background:linear-gradient(100deg,#ffffff24,#ffffff0b);border-color:#ffffff18;color:#fff;box-shadow:inset 3px 0 #4dd0e1}.side-bottom{margin-top:auto;padding:14px;background:#ffffff10;border:1px solid #ffffff1c;border-radius:15px;font-size:12px;color:#c5daf2;line-height:1.6}.side-bottom strong{display:block;color:white;margin-bottom:4px}
+
+.main{
+  min-width:0;
+  height:100vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.topbar{height:76px;background:#ffffffde;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;gap:15px;position:sticky;top:0;z-index:5}.eyebrow{font-size:10px;color:var(--blue);letter-spacing:1.5px;font-weight:850;text-transform:uppercase}.topbar h1{font-size:20px;margin:4px 0 0}.user-area{display:flex;align-items:center;gap:12px}.avatar{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#d7f7ff,#dbe4ff);display:grid;place-items:center;font-weight:850;color:var(--navy)}.user-name{font-size:12px;font-weight:800}.user-role{font-size:11px;color:var(--muted);margin-top:3px}.logout{border:1px solid #dbe5f1;border-radius:10px;background:white;padding:9px 12px;color:#a33;font-weight:750;font-size:12px}.content{padding:27px 30px 40px;max-width:1500px;margin:auto}.welcome{padding:25px 28px;border-radius:22px;color:#fff;background:radial-gradient(circle at 88% 0,#ffffff30,transparent 28%),linear-gradient(115deg,#1769aa,#12345b);box-shadow:0 17px 32px #12345b24;display:flex;justify-content:space-between;align-items:center;gap:18px;position:relative;overflow:hidden}.welcome h2{font-size:clamp(22px,3vw,30px);margin:0 0 9px}.welcome p{margin:0;color:#e0f2ff;line-height:1.6;font-size:13px}.welcome-badge{border:1px solid #ffffff38;background:#ffffff14;border-radius:15px;padding:13px 16px;white-space:nowrap;font-size:12px;font-weight:750}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:28px 0 14px}.section-head h3{font-size:16px;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:5px 0 0}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.stat{background:#fff;border:1px solid #e5edf6;border-radius:18px;padding:19px;box-shadow:0 7px 20px #183b6608;transition:.2s}.stat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:#e5f5ff;font-size:20px}.stat:nth-child(2) .stat-icon{background:#e5fbf2}.stat:nth-child(3) .stat-icon{background:#f0eaff}.stat:nth-child(4) .stat-icon{background:#fff1df}.stat-label{font-size:12px;color:var(--muted);margin-top:16px}.stat-value{font-size:25px;font-weight:850;margin-top:7px;color:var(--navy)}.stat-foot{font-size:10px;color:#8290a4;margin-top:7px}.grid-two{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:17px}.panel{background:white;border:1px solid #e3ebf5;border-radius:18px;padding:20px;box-shadow:0 7px 20px #183b6608;min-width:0}.panel h3{font-size:15px;margin:0}.panel-sub{font-size:12px;color:var(--muted);margin-top:5px}.chart-placeholder{height:180px;margin-top:20px;border-bottom:1px solid var(--line);display:flex;align-items:end;justify-content:space-around;gap:10px;padding:0 8px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 43px,#edf2f8 44px)}.bar-wrap{height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:8px;flex:1}.bar{width:min(32px,70%);border-radius:7px 7px 0 0;background:linear-gradient(180deg,#4bc5df,#1769aa);box-shadow:0 4px 9px #1769aa20}.bar-label{font-size:10px;color:var(--muted);padding-bottom:7px}.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:17px}.quick{border:1px solid #e4edf7;border-radius:13px;background:#fbfdff;padding:15px 12px;text-align:left;transition:.2s}.quick:hover{border-color:#9fcbea;background:#f2f9ff;transform:translateY(-2px)}.quick b{display:block;font-size:12px;margin-top:10px}.quick span{font-size:20px}.quick small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.notice{padding:13px 14px;border-radius:12px;background:#f5f9ff;border:1px solid #e2edf9;font-size:12px;color:#5c6e86;line-height:1.6;margin-top:13px}.table-wrap{overflow:auto;margin-top:15px}table{border-collapse:collapse;width:100%;font-size:12px;min-width:500px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #edf1f7}th{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:#71819a;background:#f8fbff}.status{display:inline-block;padding:5px 8px;border-radius:20px;background:#fff4df;color:#9b6816;font-size:10px;font-weight:800}.module-message{padding:26px;border:1px dashed #bfd1e5;background:#fbfdff;border-radius:15px;color:#61748d;font-size:13px;line-height:1.8;margin-top:18px}.module-message b{color:var(--navy)}.footer{text-align:center;color:#91a0b4;font-size:11px;padding:24px 0 0}.mobile-menu{display:none;border:1px solid var(--line);background:white;border-radius:10px;padding:8px 11px}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.app{grid-template-columns:220px minmax(0,1fr)}.grid-two{grid-template-columns:1fr}.content{padding:22px}.topbar{padding:0 22px}}
+@media(max-width:700px){.login-page{grid-template-columns:1fr}.login-hero{padding:25px;min-height:270px}.hero-title{margin:25px 0 12px;font-size:34px}.hero-points{display:none}.login-side{padding:20px}.app{display:block}.sidebar{display:none;position:fixed;z-index:20;inset:0 auto 0 0;width:270px;box-shadow:15px 0 45px #102a5640}.sidebar.open{display:flex}.topbar{height:68px;padding:0 13px}.mobile-menu{display:block}.topbar h1{font-size:16px}.eyebrow{font-size:9px}.user-name,.user-role{display:none}.content{padding:15px 13px 28px}.welcome{padding:20px;border-radius:17px;align-items:flex-start;flex-direction:column}.welcome-badge{white-space:normal}.stats{gap:10px}.stat{padding:14px;border-radius:15px}.stat-icon{width:36px;height:36px}.stat-value{font-size:22px}.stat-label{font-size:11px}.panel{padding:15px}.quick-grid{gap:8px}.quick{padding:12px 10px}}
+
+/* NEW PAK LAB - PREMIUM GLASS THEME */
+:root {
+    --npl-bg: #07131f;
+    --npl-panel: rgba(18, 39, 54, 0.88);
+    --npl-panel-light: rgba(31, 61, 76, 0.76);
+    --npl-cyan: #38f5df;
+    --npl-teal: #0ccbb5;
+    --npl-text: #edfafa;
+    --npl-muted: #a8c5ce;
+    --npl-border: rgba(91, 235, 223, 0.25);
+    --npl-glow: rgba(28, 238, 216, 0.28);
+}
+
+/* Main page */
+body {
+    background:
+        radial-gradient(ellipse at 12% 0%, rgba(13, 177, 174, 0.18), transparent 38%),
+        radial-gradient(ellipse at 95% 100%, rgba(26, 111, 169, 0.18), transparent 40%),
+        var(--npl-bg);
+    color: var(--npl-text);
+}
+
+/* Glass cards, panels and login boxes */
+.login-card,
+.login-box,
+.login-container,
+#loginPage,
+.login-panel,
+.dashboard-card,
+.stat-card,
+.card,
+.panel,
+.modal-content,
+.invoice,
+.note,
+.content-card {
+    background: linear-gradient(
+        135deg,
+        rgba(29, 58, 73, 0.92),
+        rgba(11, 28, 41, 0.88)
+    );
+    color: var(--npl-text);
+    border: 1px solid var(--npl-border);
+    border-radius: 16px;
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.24),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.10),
+        inset -1px -1px 0 rgba(26, 226, 211, 0.06);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+/* Sidebar and navigation */
+.sidebar,
+aside,
+nav {
+    border-color: var(--npl-border);
+}
+
+.sidebar a,
+.sidebar button,
+.sidebar .nav-link,
+nav a,
+nav button {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+}
+
+.sidebar a:hover,
+.sidebar button:hover,
+.sidebar .nav-link:hover,
+nav a:hover,
+nav button:hover {
+    color: #ffffff;
+    background: linear-gradient(110deg, #087f7c, #12bda9);
+    box-shadow:
+        0 0 8px rgba(56, 245, 223, 0.45),
+        0 0 20px rgba(56, 245, 223, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transform: translateX(3px);
+}
+
+/* 3D molded buttons with a glossy highlight */
+button,
+input[type="button"],
+input[type="submit"],
+.btn,
+.button,
+.theme-toggle {
+    position: relative;
+    border: 1px solid rgba(100, 255, 239, 0.32);
+    border-radius: 11px;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        filter 0.22s ease;
+    box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.22),
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+/* Light reflection across the button */
+button::before,
+.btn::before,
+.button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -130%;
+    width: 65%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+        110deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+    );
+    transform: skewX(-22deg);
+    transition: left 0.55s ease;
+}
+
+button:hover::before,
+.btn:hover::before,
+.button:hover::before {
+    left: 150%;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+.btn:hover,
+.button:hover,
+.theme-toggle:hover {
+    filter: brightness(1.12);
+    box-shadow:
+        0 0 7px rgba(56, 245, 223, 0.65),
+        0 0 18px rgba(56, 245, 223, 0.32),
+        0 7px 18px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    transform: translateY(-2px);
+}
+
+button:active,
+.btn:active,
+.button:active {
+    transform: translateY(2px);
+    box-shadow:
+        inset 0 3px 8px rgba(0, 0, 0, 0.24);
+}
+
+/* Text fields */
+input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]),
+select,
+textarea {
+    border-color: rgba(102, 196, 201, 0.42);
+    border-radius: 9px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--npl-cyan);
+    box-shadow: 0 0 0 3px rgba(56, 245, 223, 0.13),
+                0 0 12px rgba(56, 245, 223, 0.12);
+}
+
+/* Tables */
+table {
+    border-color: var(--npl-border);
+}
+
+th {
+    background: linear-gradient(110deg, #105e65, #087f7c);
+    color: #ffffff;
+}
+
+td {
+    border-color: rgba(120, 190, 198, 0.20);
+}
+
+/* Links and headings */
+a {
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--npl-cyan);
+}
+
+h1, h2, h3 {
+    text-shadow: 0 0 16px rgba(56, 245, 223, 0.10);
+}
+
+/* Keep printed invoices readable */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    button,
+    .theme-toggle,
+    .no-print {
+        display: none !important;
+    }
+
+    .invoice,
+    .note {
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        border-color: #cccccc !important;
+    }
+
+    input,
+    select,
+    textarea {
+        box-shadow: none !important;
+    }
+}
+
+/* ===== NEW PAK LAB: PREMIUM INTERACTIVE LOGIN ===== */
+:root {
+  --npl-cyan: #35f5ff;
+  --npl-blue: #197dff;
+  --npl-violet: #7556ff;
+  --npl-teal: #00f0c8;
+}
+
+.login-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100vh;
+  grid-template-columns: 1.05fr .95fr;
+  grid-template-rows: auto 1fr;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,40%),
+      #087aff35, transparent 30%),
+    linear-gradient(135deg,#020b22,#041b40 55%,#00152c);
+  color: #f2fcff;
+}
+
+.login-nav {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 18px 4%;
+  background: #03132be8;
+  border-bottom: 1px solid #35f5ff55;
+  box-shadow: 0 8px 30px #007bff20;
+  position: relative;
+  z-index: 2;
+}
+
+.nav-brand {
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 0 18px #35f5ff75;
+}
+
+.nav-brand span {
+  color: var(--npl-cyan);
+  font-size: 28px;
+  margin-right: 8px;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nav-links button {
+  color: #d7efff;
+  background: #082650;
+  border: 1px solid #168eff66;
+  border-radius: 24px;
+  padding: 10px 15px;
+  box-shadow: inset 0 1px 0 #ffffff20, 0 4px 0 #02091b;
+  transition: .25s ease;
+}
+
+.nav-links button:hover,
+.nav-links button:focus-visible {
+  color: white;
+  background: linear-gradient(120deg,#087fff,#713eff);
+  box-shadow: 0 0 12px #168eff, 0 0 25px #35f5ff50;
+  transform: translateY(-3px);
+}
+
+.login-hero {
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,40%),#08bfff50,transparent 38%),
+    linear-gradient(145deg,#03102c,#06376a 65%,#042347);
+  border-right: 1px solid #35f5ff40;
+}
+
+.login-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg,transparent 35%,#ffffff0c 48%,#35f5ff12 52%,transparent 65%);
+  background-size: 220% 100%;
+  animation: nplLightSweep 9s linear infinite;
+}
+
+@keyframes nplLightSweep {
+  from { background-position: 150% 0; }
+  to { background-position: -100% 0; }
+}
+
+.brand,
+.hero-title {
+  color: white;
+  text-shadow: 0 0 20px #35f5ff45;
+}
+
+.hero-copy { color: #c5eaff; }
+
+.hero-points {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(125px,170px));
+  justify-content: start;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.hero-point {
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 9px;
+  padding: 14px;
+  border-radius: 50%;
+  color: #eaffff;
+  background: radial-gradient(circle at 30% 20%,#1168a7,#04152f 72%);
+  border: 2px solid #159fff;
+  box-shadow: 0 0 10px #168fff, inset 0 0 20px #168fff45,
+              inset 0 2px 5px #ffffff30, 0 12px 28px #0007;
+  transition: transform .2s ease, box-shadow .2s ease;
+  will-change: transform;
+}
+
+.hero-point:nth-child(2) {
+  border-color: #00f0c8;
+  box-shadow: 0 0 12px #00f0c8, inset 0 0 20px #00f0c840, 0 12px 28px #0007;
+}
+.hero-point:nth-child(3) {
+  border-color: #8864ff;
+  box-shadow: 0 0 12px #8864ff, inset 0 0 20px #8864ff45, 0 12px 28px #0007;
+}
+.hero-point:nth-child(4) {
+  border-color: #ffbd42;
+  box-shadow: 0 0 12px #ffbd42, inset 0 0 20px #ffbd4240, 0 12px 28px #0007;
+}
+
+.circle-icon { font-size: 30px; color: var(--npl-cyan); }
+.hero-point b { font-size: 13px; }
+.hero-point small { font-size: 10px; color: #bcecff; }
+
+.login-side {
+  position: relative;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,40%),#087aff35,transparent 45%),
+    #03142c;
+}
+
+.login-card {
+  position: relative;
+  overflow: hidden;
+  color: #edfbff;
+  background: linear-gradient(145deg,#092c53ed,#04152ff5);
+  border: 1px solid #20cfff99;
+  border-radius: 25px;
+  box-shadow: 0 0 15px #078bff60, 0 0 42px #087aff25,
+              inset 0 2px 0 #ffffff25, inset 0 -2px 0 #35f5ff20;
+  backdrop-filter: blur(18px);
+  transition: box-shadow .25s ease, transform .2s ease;
+}
+
+.login-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 65%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(100deg,transparent,#ffffff20,#35f5ff25,transparent);
+  transform: skewX(-18deg);
+  animation: nplCardReflection 7s ease-in-out infinite;
+}
+
+@keyframes nplCardReflection {
+  0%,20% { left: -120%; }
+  75%,100% { left: 150%; }
+}
+
+.login-card h2 { color: #72f7ff; }
+.login-card .muted,
+.login-card .safe-note { color: #b9d9ed; }
+
+.login-card .field input,
+.login-card .field select {
+  color: #f2fcff;
+  background: #041a35;
+  border: 1px solid #168eff88;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 7px #0005;
+}
+
+.login-card .field select option {
+  background: #041a35;
+  color: white;
+}
+
+.login-card .field input:focus,
+.login-card .field select:focus {
+  border-color: var(--npl-cyan);
+  box-shadow: 0 0 0 3px #35f5ff20, 0 0 17px #35f5ff35;
+}
+
+.login-icon {
+  color: white;
+  background: linear-gradient(145deg,#087fff,#6d4cff);
+  border: 1px solid #7af5ff;
+  border-radius: 50%;
+  box-shadow: 0 0 22px #168fff90, inset 0 2px 4px #ffffff70;
+}
+
+.login-submit {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #b7ffff;
+  border-radius: 30px;
+  background: linear-gradient(110deg,#00cfff,#216cff,#714cff,#00e9cf);
+  background-size: 220% 100%;
+  color: white;
+  box-shadow: 0 5px 0 #064a9c, 0 0 16px #087fff90,
+              inset 0 2px 0 #ffffff80;
+  transition: transform .2s ease, box-shadow .2s ease, background-position .4s ease;
+}
+
+.login-submit:hover {
+  transform: translateY(-3px);
+  background-position: 100% 0;
+  box-shadow: 0 7px 0 #064a9c, 0 0 15px #35f5ff,
+              0 0 30px #087fff80;
+}
+
+.login-submit:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #064a9c, inset 0 2px 5px #0004;
+}
+
+.login-submit:disabled { opacity: .75; cursor: wait; }
+
+@media(max-width:700px) {
+  .login-page { grid-template-columns: 1fr; }
+  .login-nav { align-items: flex-start; }
+  .nav-links { gap: 5px; }
+  .nav-links button { padding: 8px 10px; font-size: 12px; }
+  .hero-points { grid-template-columns: repeat(2,minmax(115px,145px)); justify-content: center; }
+  .hero-point { max-width: 145px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .login-hero::before,
+  .login-card::before { animation: none; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
+
+/* NEW PAK LAB — 3D LOGIN DESIGN */
+body {
+  background: #061329;
+}
+
+.login-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  grid-template-columns: 1fr 0.9fr;
+  background:
+    radial-gradient(ellipse at 20% 15%, #174f83 0%, transparent 42%),
+    linear-gradient(135deg, #061329, #0b2445 55%, #06101f);
+  overflow: hidden;
+}
+
+.login-hero {
+  background:
+    radial-gradient(circle at 70% 30%, #24d8ff50, transparent 25%),
+    linear-gradient(145deg, #081a35, #0b3764 65%, #087caa);
+}
+
+.brand {
+  letter-spacing: 2px;
+  text-shadow: 0 0 18px #55dfff70;
+}
+
+.hero-title {
+  text-shadow: 0 5px 25px #00102080;
+}
+
+.hero-point {
+  border: 1px solid #62dfff55;
+  background: linear-gradient(135deg, #ffffff18, #ffffff05);
+  box-shadow: inset 0 1px 0 #ffffff25, 0 8px 25px #00102035;
+  backdrop-filter: blur(14px);
+  transition: transform .25s, border-color .25s;
+}
+
+.hero-point:hover {
+  transform: translateX(6px);
+  border-color: #55e5ff;
+}
+
+.login-side {
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 35%, #14619a55, transparent 45%),
+    linear-gradient(145deg, #0a1b34, #071326);
+}
+
+.login-card {
+  position: relative;
+  color: #eaf8ff;
+  background: linear-gradient(145deg, #102d4c, #08192e);
+  border: 1px solid #48d7ff65;
+  border-radius: 26px;
+  box-shadow:
+    0 25px 65px #0008,
+    inset 0 1px 1px #ffffff25,
+    0 0 28px #00bfff20;
+}
+
+.login-card h2 {
+  color: #ffffff;
+}
+
+.login-card .muted,
+.login-card .safe-note {
+  color: #b4cde3;
+}
+
+.login-icon {
+  border: 1px solid #60e4ff80;
+  background: linear-gradient(145deg, #1a7099, #122b59);
+  box-shadow: 0 0 24px #00cfff35, inset 0 1px 2px #ffffff55;
+}
+
+.field label {
+  color: #d9f3ff;
+}
+
+.field input,
+.field select {
+  color: #f3fbff;
+  background: #06182b;
+  border: 1px solid #315a7a;
+}
+
+.field input::placeholder {
+  color: #829eb7;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #36dfff;
+  box-shadow: 0 0 0 3px #24d8ff25;
+}
+
+.primary {
+  background: linear-gradient(120deg, #0879bb, #13b9d7);
+  box-shadow: 0 8px 25px #00bfff35, inset 0 1px 1px #ffffff55;
+}
+
+.primary:hover {
+  box-shadow: 0 0 28px #00cfff55;
+}
+
+@media (max-width: 700px) {
+  .login-page {
+    grid-template-columns: 1fr;
+    overflow: auto;
+  }
+
+  .login-hero {
+    min-height: auto;
+    padding: 22px 20px 16px;
+  }
+
+  .hero-title {
+    font-size: 29px;
+    margin: 20px 0 8px;
+  }
+
+  .hero-copy {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .login-side {
+    padding: 14px 16px 24px;
+  }
+
+  .login-card {
+    max-width: 440px;
+    padding: 22px;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 701px) {
+  .login-hero {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+
+  .hero-title {
+    margin-top: 25px;
+    font-size: clamp(28px, 3.4vw, 44px);
+  }
+
+  .login-card {
+    padding: 24px;
+  }
+
+  .login-card h2 {
+    margin-top: 14px;
+  }
+
+  .field {
+    margin: 12px 0;
+  }
+
+  .safe-note {
+    margin-top: 12px;
+  }
+}
+/* Light / Dark Theme Button */
+.theme-toggle {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px;
+  border: 1px solid #4b83a8;
+  border-radius: 10px;
+  background: transparent;
+  color: #eaf4ff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: rgba(100, 180, 255, 0.14);
+}
+
+/* Light Mode Colors */
+body.light-theme {
+  background: #edf4fa;
+  color: #172b3b;
+}
+
+body.light-theme .login-page {
+  background: #edf4fa;
+  color: #172b3b;
+}
+
+body.light-theme .login-hero,
+body.light-theme .login-card {
+  background: #ffffff;
+  color: #172b3b;
+  border-color: #d6e2ed;
+}
+
+body.light-theme .hero-title,
+body.light-theme .login-card h2,
+body.light-theme .brand {
+  color: #123b5a;
+}
+
+body.light-theme .hero-point,
+body.light-theme .muted,
+body.light-theme .safe-note,
+body.light-theme .login-card p {
+  color: #526779;
+}
+
+body.light-theme .login-card label {
+  color: #29465d;
+}
+
+body.light-theme .login-card input,
+body.light-theme .login-card select {
+  background: #f7fafc;
+  color: #172b3b;
+  border-color: #cbd9e5;
+}
+
+body.light-theme .theme-toggle {
+  color: #123b5a;
+  border-color: #9bb8ce;
+}
+
+body.light-theme .theme-toggle:hover {
+  background: #e5f1fa;
+}/* Improve Dark Mode Readability */
+body:not(.light-theme) .hero-title {
+  color: #ffffff;
+}
+
+body:not(.light-theme) .login-hero {
+  color: #f1f7ff;
+}
+
+body:not(.light-theme) .hero-point {
+  color: #e4efff;
+  font-weight: 500;
+}
+
+body:not(.light-theme) .login-hero p {
+  color: #d6e5f5;
+}
+
+body:not(.light-theme) .hero-point strong {
+  color: #ffffff;
+}
+
+body:not(.light-theme) .login-card h2 {
+  color: #ffffff;
+}
+
+body:not(.light-theme) .muted,
+body:not(.light-theme) .safe-note {
+  color: #cbd9e8;
+}/* New Pak Lab - Premium Dark Mode */
+body:not(.light-theme) .login-hero p {
+  color: #8deaff;
+  text-shadow: 0 0 8px rgba(0, 220, 255, 0.18);
+}
+
+body:not(.light-theme) .hero-point {
+  color: #b9f4ff;
+  font-weight: 600;
+  text-shadow: 0 0 7px rgba(0, 220, 255, 0.22);
+}
+
+body:not(.light-theme) .hero-point strong {
+  color: #ffffff;
+}
+
+body:not(.light-theme) .hero-title {
+  color: #f2fbff;
+  text-shadow: 0 0 12px rgba(75, 205, 255, 0.2);
+}
+
+/* Glossy laboratory icon effect */
+.lab-icon,
+.hero-point .lab-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  filter: drop-shadow(0 3px 2px #061526)
+          drop-shadow(0 0 7px rgba(0, 225, 255, 0.45));
+  transition: transform 0.25s ease, filter 0.25s ease;
+  animation: labFloat 3s ease-in-out infinite;
+}
+
+.lab-icon:hover,
+.hero-point:hover .lab-icon {
+  transform: translateY(-5px) scale(1.15) rotate(-5deg);
+  filter: drop-shadow(0 0 12px #00e5ff);
+}
+
+@keyframes labFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-icon,
+  .hero-point .lab-icon {
+    animation: none;
+    transition: none;
+  }
+}/* Bright Red Text - Dark Mode Only */
+body:not(.light-theme) .login-hero p {
+  color: #ff5c68;
+  text-shadow: 0 0 8px rgba(255, 40, 60, 0.35);
+}
+
+body:not(.light-theme) .hero-point {
+  color: #ff777f;
+  font-weight: 600;
+  text-shadow: 0 0 7px rgba(255, 40, 60, 0.25);
+}
+
+body:not(.light-theme) .hero-point strong {
+  color: #ff303f;
+  text-shadow: 0 0 10px rgba(255, 40, 60, 0.35);
+}
+
+body:not(.light-theme) .hero-title {
+  color: #ff626d;
+  text-shadow: 0 0 12px rgba(255, 40, 60, 0.3);
+}/* FIX: Keep Light Mode text blue, not red */
+body.light-theme .hero-title {
+  color: #123b5a !important;
+  text-shadow: none !important;
+}
+
+body.light-theme .login-hero p {
+  color: #526779 !important;
+  text-shadow: none !important;
+}
+
+body.light-theme .hero-point {
+  color: #29465d !important;
+  text-shadow: none !important;
+}
+
+body.light-theme .hero-point strong {
+  color: #123b5a !important;
+  text-shadow: none !important;
+}
+
+/* Mobile layout improvements */
+@media (max-width: 600px) {
+  .login-page {
+    padding: 16px !important;
+    gap: 20px !important;
+  }
+
+  .login-hero,
+  .login-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-title {
+    font-size: clamp(25px, 7vw, 34px) !important;
+    line-height: 1.25 !important;
+  }
+
+  .hero-point {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+
+  .login-card {
+    padding: 22px 18px !important;
+  }
+
+  .login-card input,
+  .login-card select,
+  .login-card button {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}/* DARK MODE: WHITE TEXT */
+body:not(.light-theme) .hero-title,
+body:not(.light-theme) .login-hero p,
+body:not(.light-theme) .hero-point,
+body:not(.light-theme) .hero-point strong {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15) !important;
+}
+
+/* LIGHT MODE: BLUE TEXT */
+body.light-theme .hero-title,
+body.light-theme .hero-point strong {
+  color: #123b5a !important;
+  text-shadow: none !important;
+}
+
+body.light-theme .login-hero p,
+body.light-theme .hero-point {
+  color: #526779 !important;
+  text-shadow: none !important;
+}/* GLOSSY LAB ICONS */
+.lab-icon,
+.hero-point .lab-icon,
+.login-icon,
+nav svg,
+aside svg,
+.sidebar svg,
+.nav-icon,
+button svg {
+  filter:
+    drop-shadow(0 2px 1px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 5px rgba(65, 210, 255, 0.35));
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+/* REFLECTIVE HOVER */
+.lab-icon:hover,
+.hero-point:hover .lab-icon,
+nav a:hover svg,
+aside a:hover svg,
+.sidebar a:hover svg,
+button:hover svg {
+  transform: translateY(-3px) scale(1.12);
+  filter:
+    drop-shadow(0 3px 2px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 11px rgba(100, 225, 255, 0.85));
+}
+
+/* ICON HIGHLIGHT IN DARK MODE */
+body:not(.light-theme) .login-icon {
+  filter:
+    drop-shadow(0 3px 2px #071827)
+    drop-shadow(0 0 12px rgba(80, 220, 255, 0.6));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-icon,
+  .hero-point .lab-icon,
+  .login-icon,
+  nav svg,
+  aside svg,
+  .sidebar svg,
+  .nav-icon,
+  button svg {
+    transition: none;
+  }
+}</style>
+</head>
+<body>
+<section id="loginScreen" class="login-page">
+ <nav class="login-nav">
+  <div class="nav-brand"><span>⚗</span> NEW PAK LAB</div>
+  <div class="nav-links">
+    <button type="button" data-login-nav="Home">⌂ Home</button>
+    <button type="button" data-login-nav="About">⬡ About</button>
+    <button type="button" data-login-nav="Services">▤ Services</button>
+    <button type="button" data-login-nav="Branches">♧ Branches</button>
+    <button type="button" data-login-nav="Contact">☎ Contact</button>
+  </div>
+</nav> <div class="login-hero">
+    <div class="brand">✚ NEW PAK LAB <small>MEDICAL LABORATORY MANAGEMENT</small></div>
+    <h1 class="hero-title">Better care begins with better information.</h1>
+    <p class="hero-copy">A central workspace for laboratory teams, branch operations and patient-service administration.</p>
+    <div class="hero-points">
+  <div class="hero-point">
+    <span class="circle-icon">⚗</span>
+    <b>Laboratory Tests</b>
+    <small>Accurate & Reliable</small>
+  </div>
+  <div class="hero-point">
+    <span class="circle-icon">♧</span>
+    <b>Patient Care</b>
+    <small>Your Health, Our Priority</small>
+  </div>
+  <div class="hero-point">
+    <span class="circle-icon">▤</span>
+    <b>Digital Reports</b>
+    <small>Fast & Secure</small>
+  </div>
+  <div class="hero-point">
+    <span class="circle-icon">♧</span>
+    <b>Multiple Branches</b>
+    <small>Wide Coverage</small>
+  </div>
+</div>
+  <div class="login-side">
+    <form class="login-card" id="loginForm">
+      <div class="login-icon">🧪</div>
+      <h2>Welcome back</h2>
+      <p class="muted" style="font-size:13px;line-height:1.6">Sign in with your registered laboratory account.</p>
+      <div class="field"><label for="branch">Select your branch</label>
+<select id="branch" required>
+  <option value="">Choose a branch</option>
+  <option value="bajaur-main">Bajaur Main Branch</option>
+  <option value="safi">Safi Branch</option>
+  <option value="khar">Khar Branch</option>
+  <option value="kharai">Kharai Branch</option>
+  <option value="mamund">Mamund Branch</option>
+  <option value="other">Other Branch</option>
+</select>
+</div>
+      <div class="field"><label for="email">Registered email</label><input id="email" type="email" autocomplete="username" placeholder="name@example.com" required></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required></div>
+      <button class="primary login-submit" id="loginButton" type="submit">Sign in securely →</button>
+     <div id="loginMessage" class="message" role="status"></div>
+     <div id="offlinePanel" class="notice" style="display:none;margin-top:14px">
+       <b>Offline device unlock</b>
+       <p style="font-size:12px;margin:6px 0">Internet unavailable? Unlock this device with your saved 6-digit PIN.</p>
+       <div class="field"><label for="offlinePin">6-digit offline PIN</label><input id="offlinePin" type="password" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="Enter your PIN"></div>
+       <button class="primary" id="offlineUnlock" type="button">Unlock offline</button>
+       <div id="offlineMessage" class="message" role="status"></div>
+     </div>
+<div class="safe-note">🔒 Online access is verified by Firebase. Offline PIN only unlocks this device; cloud sync requires internet.</div>
+
+<button type="button" class="theme-toggle" id="themeToggle">
+  ☀️ Light Mode
+</button>
+
+</form>
+  </div>
+</section>
+<section id="app" class="app hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-brand"><div class="brand-mark">✚</div><div><b>NEW PAK LAB</b><small>LAB MANAGEMENT</small></div></div>
+    <div class="nav-label">WORKSPACE</div>
+    <nav class="nav" id="nav">
+      <button class="active" data-page="Dashboard"><span>▦</span>Dashboard</button>
+      <button data-page="Create Invoice"><span>＋</span>Create Invoice</button>
+      <button data-page="Saved Records"><span>▤</span>Saved Records</button>
+      <button data-page="Patients"><span>♙</span>Patients</button>
+      <button data-page="Reports"><span>▥</span>Reports</button>
+      <button data-page="Volunteer"><span>♡</span>Volunteer Records</button>
+      <button data-page="Career"><span>▣</span>Career & Applications</button>
+      <button data-page="Settings"><span>⚙</span>Settings</button>
+    </nav>
+    <div class="side-bottom"><strong>🛡️ Branch security</strong>Your account access is verified by Firebase. Patient records are not loaded by this design preview.</div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:10px"><button class="mobile-menu" id="menuButton" type="button">☰</button><div><div class="eyebrow">NEW PAK MEDICAL LABORATORY</div><h1 id="pageTitle">Dashboard</h1></div></div>
+      <div class="user-area"><div class="avatar">NP</div><div><div class="user-name" id="userEmail">Signed-in user</div><div class="user-role" id="userRole">Verified account</div></div><button class="logout" id="logoutButton" type="button">↪ Logout</button></div>
+    </header>
+    <div class="content">
+      <div id="dashboardPage">
+        <section class="welcome"><div><h2 id="welcomeTitle">Welcome to New Pak Lab 👋</h2><p>Your laboratory operations workspace is ready.<br>Use the menu to open a section.</p></div><div class="welcome-badge">● Secure session &nbsp; | &nbsp; <span id="branchName">Branch access verified</span></div></section>
+        <div class="section-head"><div><h3>Overview</h3><p>Live totals will appear when the relevant database modules are connected.</p></div></div>
+        <div class="stats">
+          <div class="stat"><div class="stat-top"><span class="stat-icon">♙</span><span class="muted">01</span></div><div class="stat-label">Total Patients</div><div class="stat-value">—</div><div class="stat-foot">Database connection pending</div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-icon">🧾</span><span class="muted">02</span></div><div class="stat-label">Today's Patients</div><div class="stat-value">—</div><div class="stat-foot">Database connection pending</div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-icon">📑</span><span class="muted">03</span></div><div class="stat-label">Total Invoices</div><div class="stat-value">—</div><div class="stat-foot">Database connection pending</div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-icon">🏥</span><span class="muted">04</span></div><div class="stat-label">Configured Branches</div><div class="stat-value">5</div><div class="stat-foot">Branch list configured in interface</div></div>
+        </div>
+        <div class="grid-two">
+          <section class="panel"><h3>Activity overview</h3><div class="panel-sub">Illustrative layout only — not real patient or invoice statistics.</div><div class="chart-placeholder">
+            <div class="bar-wrap"><div class="bar" style="height:36%"></div><div class="bar-label">Mon</div></div><div class="bar-wrap"><div class="bar" style="height:62%"></div><div class="bar-label">Tue</div></div><div class="bar-wrap"><div class="bar" style="height:48%"></div><div class="bar-label">Wed</div></div><div class="bar-wrap"><div class="bar" style="height:78%"></div><div class="bar-label">Thu</div></div><div class="bar-wrap"><div class="bar" style="height:56%"></div><div class="bar-label">Fri</div></div><div class="bar-wrap"><div class="bar" style="height:88%"></div><div class="bar-label">Sat</div></div><div class="bar-wrap"><div class="bar" style="height:42%"></div><div class="bar-label">Sun</div></div>
+          </div></section>
+          <section class="panel"><h3>Quick actions</h3><div class="panel-sub">Open a workspace section</div><div class="quick-grid">
+            <button class="quick" data-open="Create Invoice"><span>🧾</span><b>Create Invoice</b><small>Invoice workspace</small></button><button class="quick" data-open="Patients"><span>♙</span><b>Patients</b><small>Patient workspace</small></button><button class="quick" data-open="Saved Records"><span>📚</span><b>Saved Records</b><small>Records workspace</small></button><button class="quick" data-open="Reports"><span>📊</span><b>View Reports</b><small>Reports workspace</small></button>
+          </div><div class="notice"><b>Setup status:</b> Login and branch profile checks use Firebase. The other sections are design placeholders and will not save patient data until implemented securely.</div></section>
+        </div>
+      </div>
+      <div id="modulePage" class="hidden"><section class="panel"><h3 id="moduleHeading">Workspace</h3><div class="panel-sub" id="moduleSub">New Pak Lab Management System</div><div class="module-message"><b>Workspace design is ready.</b><br>This section is currently a placeholder. It does not yet create, read, edit, delete, or store records. We will connect each module one by one using secure Firebase rules without enabling public database access.</div></section></div>
+      <div class="footer">© New Pak Medical Laboratory · Secure administration portal · Interface preview</div>
+    </div>
+  </main>
+</section>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDtEYthnTTStLjTcLssi2hmjLPQQJzLzY0",
+  authDomain: "new-pak-medical-laborato-872b4.firebaseapp.com",
+  projectId: "new-pak-medical-laborato-872b4",
+  storageBucket: "new-pak-medical-laborato-872b4.firebasestorage.app",
+  messagingSenderId: "199483069764",
+  appId: "1:199483069764:web:a755612887b93e951ef311",
+  measurementId: "G-FXKPGQQ1N4"
+};
+const branches = {
+ "bajaur-main":"Bajaur Main Branch",
+ "safi":"Safi Branch",
+ "khar":"Khar Branch",
+ "kharai":"Kharai Branch",
+ "mamund":"Mamund Branch",
+ "other":"Other Branch"
+};
+const loginScreen=document.getElementById("loginScreen");
+const appScreen=document.getElementById("app");
+const loginForm=document.getElementById("loginForm");
+const loginMessage=document.getElementById("loginMessage");
+const loginButton=document.getElementById("loginButton");
+let auth=null, db=null, firebaseReady=false;
+function message(text){loginMessage.textContent=text}
+function showLogin(){loginScreen.classList.remove("hidden");appScreen.classList.add("hidden")}
+function showApp(profile,email,selectedBranch){
+ loginScreen.classList.add("hidden");appScreen.classList.remove("hidden");
+ document.getElementById("userEmail").textContent=email||"Verified user";
+ document.getElementById("userRole").textContent=(profile.role||"user")+" · Active";
+ document.getElementById("branchName").textContent=profile.role==="superadmin"?"All branches":(branches[selectedBranch]||"Verified branch");
+ document.getElementById("welcomeTitle").textContent="Welcome to New Pak Lab 👋";
+}
+function checkProfile(user, selectedBranch){
+ return db.collection("users").doc(user.uid).get().then(doc=>{
+  if(!doc.exists) throw new Error("Your user profile was not found. Please contact the Super Admin.");
+  const p=doc.data();
+  if(p.active!==true) throw new Error("Your account is inactive. Please contact the Super Admin.");
+  if(String(p.email||"").toLowerCase()!==String(user.email||"").toLowerCase()) throw new Error("Account email does not match the registered profile.");
+  if(p.role==="superadmin"){
+   if(p.branchId!=="all") throw new Error("Super Admin profile must have branchId set to all.");
+  } else {
+   if(!branches[p.branchId]) throw new Error("Your account has no valid branch assigned.");
+   if(p.branchId!==selectedBranch) throw new Error("Selected branch does not match your assigned branch.");
+  }
+  return p;
+ });
+}
+try{
+ if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+ auth=firebase.auth();db=firebase.firestore();firebaseReady=true;
+}catch(e){console.error(e);message("Firebase could not initialize. Check your internet connection and configuration.");}
+// Offline access is a local device unlock only. Never store the Firebase password.
+const OFFLINE_KEY="newPakOfflineAccessV1";
+const offlinePanel=document.getElementById("offlinePanel");
+const offlineMessage=document.getElementById("offlineMessage");
+function bytesToHex(bytes){return Array.from(new Uint8Array(bytes)).map(b=>b.toString(16).padStart(2,"0")).join("")}
+async function pinHash(pin,salt){
+ const enc=new TextEncoder();
+ const key=await crypto.subtle.importKey("raw",enc.encode(pin),"PBKDF2",false,["deriveBits"]);
+ const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:enc.encode(salt),iterations:150000,hash:"SHA-256"},key,256);
+ return bytesToHex(bits);
+}
+function readOffline(){try{return JSON.parse(localStorage.getItem(OFFLINE_KEY)||"null")}catch(e){return null}}
+function showOfflineOption(){const saved=readOffline();offlinePanel.style.display=saved?"block":"none";}
+async function saveOfflineAccess(user,profile,selectedBranch){
+ if(!window.crypto || !crypto.subtle) return;
+ const existing=readOffline();
+ if(existing && existing.email===user.email && existing.branchId===profile.branchId) return;
+ const pin=prompt("Set a 6-digit PIN for offline access on this device. Do not reuse your email password.");
+ if(pin===null)return;
+ if(!/^\d{6}$/.test(pin)){alert("PIN exactly 6 digits ka hona chahiye. You can set it next time after online login.");return;}
+ const salt=bytesToHex(crypto.getRandomValues(new Uint8Array(16)));
+ const hash=await pinHash(pin,salt);
+ localStorage.setItem(OFFLINE_KEY,JSON.stringify({salt,hash,email:user.email,uid:user.uid,role:profile.role,branchId:profile.branchId,selectedBranch,active:true,savedAt:Date.now()}));
+ showOfflineOption();
+}
+document.getElementById("offlineUnlock").addEventListener("click",async()=>{
+ const saved=readOffline(),pin=document.getElementById("offlinePin").value;
+ offlineMessage.textContent="";
+ if(!saved){offlineMessage.textContent="No offline profile saved. Please sign in online first.";return;}
+ if(!/^\d{6}$/.test(pin)){offlineMessage.textContent="Enter your 6-digit PIN.";return;}
+ try{
+  const hash=await pinHash(pin,saved.salt);
+  if(hash!==saved.hash){offlineMessage.textContent="Incorrect PIN.";return;}
+  const profile={role:saved.role,branchId:saved.branchId,active:true};
+  sessionStorage.setItem("newPakSelectedBranch",saved.selectedBranch);
+  showApp(profile,saved.email,saved.selectedBranch);
+  document.getElementById("userRole").textContent=(saved.role||"user")+" · Offline device session";
+ }catch(err){offlineMessage.textContent="Offline unlock is unavailable in this browser.";}
+});
+window.addEventListener("online",()=>{showOfflineOption();});
+window.addEventListener("offline",()=>{showOfflineOption();message("Internet unavailable. Use your saved offline PIN if available.");});
+showOfflineOption();
+
+loginForm.addEventListener("submit",async e=>{
+ e.preventDefault();message("");
+ if(!firebaseReady){message("Firebase is not ready. Check internet connection and Firebase configuration.");return}
+ const selectedBranch=document.getElementById("branch").value;
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ loginButton.disabled=true;loginButton.textContent="Verifying account…";
+ try{
+  const credential=await auth.signInWithEmailAndPassword(email,password);
+  const profile=await checkProfile(credential.user,selectedBranch);
+  sessionStorage.setItem("newPakSelectedBranch",selectedBranch);
+  await saveOfflineAccess(credential.user,profile,selectedBranch);
+  showApp(profile,credential.user.email,selectedBranch);
+ }catch(err){
+  console.error(err);
+  const friendly={
+   "auth/invalid-credential":"Email or password is incorrect.",
+   "auth/invalid-email":"Please enter a valid email address.",
+   "auth/too-many-requests":"Too many attempts. Please wait and try again.",
+   "auth/network-request-failed":"Network problem. Check your internet connection."
+  };
+  message(friendly[err.code]||err.message||"Sign-in failed. Please try again.");
+  if(err.code==="auth/network-request-failed" || !navigator.onLine) showOfflineOption();
+  if(auth&&auth.currentUser){try{await auth.signOut()}catch(ignore){}}
+ }finally{loginButton.disabled=false;loginButton.textContent="Sign in securely →"}
+});
+auth?.onAuthStateChanged(async user=>{
+ if(!user){showLogin();return}
+ try{
+  const selectedBranch=sessionStorage.getItem("newPakSelectedBranch")||"";
+  const profile=await checkProfile(user,selectedBranch);
+  showApp(profile,user.email,selectedBranch);
+ }catch(err){
+  console.warn("Session profile verification:",err.message);
+  // Do not sign out an already authenticated user solely because the page was refreshed
+  // before their branch choice is available. Ask them to select the branch and sign in.
+  if(!sessionStorage.getItem("newPakSelectedBranch")) showLogin();
+  else {message(err.message);showLogin();try{await auth.signOut()}catch(ignore){}}
+ }
+});
+document.getElementById("logoutButton").addEventListener("click",async()=>{
+ try{await auth.signOut()}catch(e){alert("Logout error: "+e.message)}
+ sessionStorage.removeItem("newPakSelectedBranch");showLogin();
+});
+
+function openPage(page) {
+  const dashboard = document.getElementById("dashboardPage");
+  const module = document.getElementById("modulePage");
+
+  document.getElementById("pageTitle").textContent = page;
+
+  document.querySelectorAll("#nav button").forEach(function (button) {
+    button.classList.toggle("active", button.dataset.page === page);
+  });
+
+  dashboard.classList.toggle("hidden", page !== "Dashboard");
+  module.classList.toggle("hidden", page === "Dashboard");
+
+  document.getElementById("sidebar").classList.remove("open");
+
+  if (page === "Dashboard") {
+    return;
+  }
+
+  
+  if (page === "Create Invoice") {
+    module.innerHTML = `
+      <section class="panel" style="padding:0;overflow:hidden">
+        <iframe
+          src="https://mursaleenkhanbjr-dev.github.io/new-pak-lab/invoice.html"
+          title="New Pak Lab Invoice"
+          style="display
+          :block;width:100%;height:85vh;min-height:650px;border:0;background:white"
+          allow="clipboard-read; clipboard-write">
+        </iframe>
+      </section>
+    `;
+    return;
+  }
+
+  if (page === "Saved Records") {
+    let records = [];
+
+    try {
+      records = JSON.parse(
+        localStorage.getItem("newPakLabReports") || "[]"
+      );
+    } catch (e) {
+      records = [];
+    }
+
+    module.innerHTML = `
+      <section class="panel">
+        <h3>Saved Invoice Records</h3>
+        <div class="panel-sub">
+          New Pak Lab Management System
+        </div>
+        <div id="savedRecordsList"></div>
+      </section>
+    `;
+
+    const list = document.getElementById("savedRecordsList");
+
+    if (!records.length) {
+      list.textContent = "Abhi koi saved invoice nahi hai.";
+    } else {
+      list.innerHTML = records.map((r, i) => `
+        <div style="padding:14px;margin-top:10px;border:1px solid #ddd;border-radius:8px">
+          <b>${escapeHtml(r.patientName || "Unnamed Patient")}</b>
+          <p>Invoice No: ${escapeHtml(r.invoiceNo || "N/A")}</p>
+          <p>Date: ${escapeHtml(r.invoiceDate || "N/A")}</p>
+          <button data-record-index="${i}">View Invoice</button>
+        </div>
+      `).join("");
+
+      list.querySelectorAll("[data-record-index]").forEach(button => {
+        button.addEventListener("click", function () {
+          const index = Number(this.dataset.recordIndex);
+          localStorage.setItem(
+            "newPakLabSelectedInvoice",
+            String(index)
+          );
+          window.open(
+            "https://mursaleenkhanbjr-dev.github.io/new-pak-lab/invoice.html",
+            "_blank"
+          );
+        });
+      });
+    }
+
+    return;
+  }
+
+  if (page === "Patients") {
+    const branchId = sessionStorage.getItem("newPakSelectedBranch");
+
+    module.innerHTML = `
+      <section class="panel">
+        <h3>Patient Registration</h3>
+        <div class="panel-sub">New Pak Lab Management System</div>
+
+        <form id="patientForm">
+          <label>Patient Name</label>
+          <input id="patientName" required maxlength="100"
+            placeholder="Enter patient name">
+
+          <label>Mobile Number</label>
+          <input id="patientPhone" maxlength="20"
+            placeholder="03XXXXXXXXX">
+
+          <label>Age</label>
+          <input id="patientAge" type="number" min="0" max="120"
+            placeholder="Enter age">
+
+          <label>Gender</label>
+          <select id="patientGender" required>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <button type="submit" id="savePatientButton">
+            Save Patient
+          </button>
+        </form>
+
+        <p id="patientMessage" role="status"></p>
+
+        <hr>
+        <h3>Patient Records</h3>
+        <input id="patientSearch"
+          placeholder="Search by patient name or mobile">
+        <div id="patientList">Loading records...</div>
+      </section>
+    `;
+
+    const form = document.getElementById("patientForm");
+    const msg = document.getElementById("patientMessage");
+    const list = document.getElementById("patientList");
+    const search = document.getElementById("patientSearch");
+
+    if (!branchId || !db || !auth.currentUser) {
+      msg.textContent = "Please sign in again and select your branch.";
+      list.textContent = "";
+      return;
+    }
+
+    let patients = [];
+
+   function renderPatients() {
+  const term = search.value.trim().toLowerCase();
+
+  const filtered = patients.filter(p =>
+    String(p.name || "").toLowerCase().includes(term) ||
+    String(p.phone || "").toLowerCase().includes(term)
+  );
+
+  if (!filtered.length) {
+    list.textContent = "No patient records found.";
+    return;
+  }
+
+  list.innerHTML = filtered.map(p => `
+    <div style="padding:12px;margin-top:10px;border:1px solid #ddd;border-radius:8px">
+      <b>${escapeHtml(p.name || "")}</b>
+      <p>Mobile: ${escapeHtml(p.phone || "N/A")}</p>
+      <p>Age: ${escapeHtml(p.age ?? "N/A")} |
+         Gender: ${escapeHtml(p.gender || "N/A")}</p>
+
+      <button type="button" data-edit-id="${escapeHtml(p.id)}">
+        Edit
+      </button>
+
+      <button type="button" data-delete-id="${escapeHtml(p.id)}">
+        Delete
+      </button>
+    </div>
+  `).join("");
+
+  list.querySelectorAll("[data-edit-id]").forEach(button => {
+    button.addEventListener("click", async function() {
+      const patient = patients.find(p => p.id === this.dataset.editId);
+      if (!patient) return;
+
+      const name = prompt("Patient name:", patient.name || "");
+      if (name === null) return;
+
+      if (!name.trim()) {
+        alert("Patient name zaroor likhein.");
+        return;
+      }
+
+      const phone = prompt("Mobile number:", patient.phone || "");
+      if (phone === null) return;
+
+      const ageText = prompt(
+        "Age:", patient.age == null ? "" : String(patient.age)
+      );
+      if (ageText === null) return;
+
+      let age = null;
+      if (ageText.trim() !== "") {
+        age = Number(ageText);
+        if (!Number.isInteger(age) || age < 0 || age > 120) {
+          alert("Age 0 se 120 ke darmiyan honi chahiye.");
+          return;
+        }
+      }
+
+      const gender = prompt(
+        "Gender: Male, Female, or Other",
+        patient.gender || "Other"
+      );
+      if (gender === null) return;
+
+      if (!["Male", "Female", "Other"].includes(gender.trim())) {
+        alert("Gender Male, Female, ya Other likhein.");
+        return;
+      }
+
+      try {
+        await db.collection("patients").doc(patient.id).update({
+          name: name.trim(),
+          phone: phone.trim(),
+          age: age,
+          gender: gender.trim()
+        });
+
+        alert("Patient record updated successfully.");
+        await loadPatients();
+      } catch (err) {
+        console.error(err);
+        alert("Update failed. Firebase permissions check karein.");
+      }
+    });
+  });
+
+  list.querySelectorAll("[data-delete-id]").forEach(button => {
+    button.addEventListener("click", async function() {
+      const patient = patients.find(p => p.id === this.dataset.deleteId);
+      if (!patient) return;
+
+      if (!confirm(
+        "Kya aap waqai patient " + patient.name + " ka record delete karna chahte hain?"
+      )) return;
+
+      try {
+        await db.collection("patients").doc(patient.id).delete();
+        alert("Patient record deleted.");
+        await loadPatients();
+      } catch (err) {
+        console.error(err);
+        alert("Delete failed. Firebase permissions check karein.");
+      }
+    });
+  });
+}
+    async function loadPatients() {
+      list.textContent = "Loading records...";
+      try {
+        const snap = await db.collection("patients")
+          .where("branchId", "==", branchId)
+          .get();
+
+        patients = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        renderPatients();
+      } catch (err) {
+        console.error(err);
+        list.textContent =
+          "Could not load records. Check Firebase permissions and connection.";
+      }
+    }
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const button = document.getElementById("savePatientButton");
+      button.disabled = true;
+      msg.textContent = "Saving patient...";
+
+      try {
+        await db.collection("patients").add({
+          branchId: branchId,
+          name: document.getElementById("patientName").value.trim(),
+          phone: document.getElementById("patientPhone").value.trim(),
+          age: document.getElementById("patientAge").value === ""
+            ? null
+            : Number(document.getElementById("patientAge").value),
+          gender: document.getElementById("patientGender").value,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          createdBy: auth.currentUser.uid
+        });
+
+        form.reset();
+        msg.textContent = "Patient saved successfully.";
+        await loadPatients();
+      } catch (err) {
+        console.error(err);
+        msg.textContent =
+          "Save failed. Please check Firebase rules and internet connection.";
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    search.addEventListener("input", renderPatients);
+    loadPatients();
+    return;
+  }
+
+  module.innerHTML = `
+    <section class="panel">
+      <h3>${page}</h3>
+      <div class="panel-sub">New Pak Lab Management System</div>
+      <div class="module-message">
+        <b>Workspace design is ready.</b><br>
+        This section is a placeholder and is not yet connected
+        to the database.
+      </div>
+    </section>
+  `;
+}
+  function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, function (c) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[c];
+  });
+}
+document.querySelectorAll("#nav button").forEach(function (button) {
+  button.addEventListener("click", function () {
+    openPage(button.dataset.page);
+  });
+});
+
+document.querySelectorAll("[data-open]").forEach(function (button) {
+  button.addEventListener("click", function () {
+    openPage(button.dataset.open);
+  });
+});
+
+document.getElementById("menuButton").addEventListener("click", function () {
+  document.getElementById("sidebar").classList.toggle("open");
+});
+
+
+/* New Pak Lab mouse-follow glow and 3D circles */
+(function () {
+  const login = document.getElementById("loginScreen");
+  if (!login) return;
+
+  let frame = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+
+  login.addEventListener("pointermove", function (event) {
+    const rect = login.getBoundingClientRect();
+    pointerX = event.clientX - rect.left;
+    pointerY = event.clientY - rect.top;
+
+    if (frame) return;
+
+    frame = requestAnimationFrame(function () {
+      login.style.setProperty("--mx", pointerX + "px");
+      login.style.setProperty("--my", pointerY + "px");
+
+      const circles = login.querySelectorAll(".hero-point");
+      circles.forEach(function (circle) {
+        const r = circle.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (event.clientX - cx) / 35;
+        const dy = (event.clientY - cy) / 35;
+
+        circle.style.transform =
+          "perspective(500px) rotateX(" + (-dy) +
+          "deg) rotateY(" + dx + "deg) translateY(-2px)";
+      });
+
+      frame = 0;
+    });
+  });
+
+  login.addEventListener("pointerleave", function () {
+    login.style.setProperty("--mx", "50%");
+    login.style.setProperty("--my", "40%");
+    login.querySelectorAll(".hero-point").forEach(function (circle) {
+      circle.style.transform = "";
+    });
+  });
+
+  login.querySelectorAll("[data-login-nav]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const section = button.dataset.loginNav;
+
+      if (section === "Home") {
+        login.querySelector(".login-card")?.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      } else if (section === "Branches") {
+        document.getElementById("branch")?.focus();
+        document.getElementById("branch")?.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      } else {
+        const messages = {
+          About: "New Pak Lab — Medical Laboratory Management System",
+          Services: "Laboratory Tests, Patient Care and Digital Reports",
+          Contact: "Please contact your laboratory administrator."
+        };
+        const msg = document.getElementById("loginMessage");
+        if (msg) msg.textContent = messages[section] || "";
+      }
+    });
+  });
+})();// Light and Dark Mode Toggle
+const themeToggle = document.getElementById("themeToggle");
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", function () {
+    document.body.classList.toggle("light-theme");
+
+    if (document.body.classList.contains("light-theme")) {
+      themeToggle.textContent = "🌙 Dark Mode";
+    } else {
+      themeToggle.textContent = "☀️ Light Mode";
+    }
+  });
+}</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js")
+      .then(function (registration) {
+        console.log("Service Worker registered:", registration.scope);
+      })
+      .catch(function (error) {
+        console.error("Service Worker error:", error);
+      });
+  });
+}
+</script>
+<footer class="app-footer">
+  <p>© 2026 New Pak Lab Management System</p>
+  <p>Developed & Managed by Mursaleen Khan</p>
+  <p>All Rights Reserved.</p>
+</footer>
+
+<style>
+.app-footer {
+  text-align: center;
+  padding: 15px;
+  color: #64748b;
+  font-size: 13px;
+  border-top: 1px solid #ddd;
+  margin-top: 25px;
+}
+</style></body>
+</html>
