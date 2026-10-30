@@ -1,9 +1,10 @@
 
-const CACHE_NAME = "new-pak-lab-v1";
+const CACHE_NAME = "new-pak-lab-v2";
 
 const APP_FILES = [
   "./",
-  "./index-new.html"
+  "./index-new.html",
+  "./invoice.html"
 ];
 
 self.addEventListener("install", (event) => {
@@ -19,7 +20,10 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          .filter((key) => key.startsWith("new-pak-lab-") && key !== CACHE_NAME)
+          .filter((key) =>
+            key.startsWith("new-pak-lab-") &&
+            key !== CACHE_NAME
+          )
           .map((key) => caches.delete(key))
       )
     ).then(() => self.clients.claim())
@@ -38,25 +42,36 @@ self.addEventListener("fetch", (event) => {
       .then((response) => {
         if (response.ok) {
           const copy = response.clone();
+
           caches.open(CACHE_NAME).then((cache) =>
             cache.put(event.request, copy)
           );
         }
+
         return response;
       })
       .catch(async () => {
         const cached = await caches.match(event.request);
+
         if (cached) return cached;
 
         if (event.request.mode === "navigate") {
-          return (await caches.match("./index-new.html")) ||
-            (await caches.match("./"));
+          return (
+            await caches.match("./index-new.html")
+          ) || new Response("Offline mode: page available nahi.", {
+            status: 503
+          });
         }
 
-        return new Response("Internet available nahi. Ye file offline cache mein nahi hai.", {
-          status: 503,
-          headers: { "Content-Type": "text/plain; charset=utf-8" }
-        });
+        return new Response(
+          "Internet available nahi. File offline cache mein nahi hai.",
+          {
+            status: 503,
+            headers: {
+              "Content-Type": "text/plain; charset=utf-8"
+            }
+          }
+        );
       })
   );
 });
